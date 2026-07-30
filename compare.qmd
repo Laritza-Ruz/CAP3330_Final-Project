@@ -1,0 +1,107 @@
+---
+title: "Compare Deliveries"
+subtitle: "Skill 2 — Single-seller vs. multi-seller delivery comparison"
+---
+
+<div class="question-card">
+<div class="card-title">Business Question</div>
+Do multi-seller orders take longer to deliver than single-seller orders?
+</div>
+
+```{r compare-setup, echo=FALSE}
+source("R/website_helpers.R")
+silent_run({
+  source("R/compare_deliveries.R")
+  res <- run_compare_deliveries("data/processed/order_level_analysis.rds")
+})
+```
+
+```{r compare-kpis, echo=FALSE, results='asis'}
+cat(kpi_row(c(
+  kpi_card("box", "Single-Seller Median", paste0(sprintf("%.2f", res$median_single), " days"), paste0(format(res$n_single, big.mark = ","), " orders"), "blue"),
+  kpi_card("boxes", "Multi-Seller Median", paste0(sprintf("%.2f", res$median_multi), " days"), paste0(format(res$n_multi, big.mark = ","), " orders"), "green"),
+  kpi_card("arrow-down-up", "Observed Median Difference", paste0(sprintf("%.2f", res$median_difference), " days"), "Multi minus single", "orange"),
+  kpi_card("calculator", "Hodges-Lehmann Shift", paste0(sprintf("%.2f", res$estimated_difference), " days"), "95% CI location estimate", "navy")
+)))
+```
+
+<div class="two-col-grid">
+
+<div class="dash-panel chart-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-bar-chart-steps"></i></span> Delivery Time Comparison</div>
+<div class="panel-body">![Delivery comparison boxplot](images/delivery_comparison_boxplot.png)</div>
+</div>
+
+<div class="dash-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-table"></i></span> Group Summary</div>
+<div class="panel-body">
+
+```{r compare-group-table, echo=FALSE}
+knitr::kable(
+  data.frame(
+    Group = res$group_summary$group,
+    N = format(res$group_summary$sample_size, big.mark = ","),
+    Median = round(res$group_summary$median_days, 2),
+    Mean = round(res$group_summary$mean_days, 2),
+    SD = round(res$group_summary$sd_days, 2),
+    stringsAsFactors = FALSE
+  ),
+  col.names = c("Group", "N", "Median Days", "Mean Days", "SD"),
+  align = c("l", "r", "r", "r", "r"),
+  row.names = FALSE
+)
+```
+
+</div>
+</div>
+
+</div>
+
+<div class="dash-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-clipboard-data"></i></span> Statistical Results</div>
+<div class="panel-body">
+
+| Result | Value |
+| :--- | :--- |
+| Selected test | `r res$test_name` |
+| Observed median difference (multi − single) | **`r sprintf("%.2f", res$median_difference)`** days |
+| Hodges–Lehmann location shift (multi − single) | **`r sprintf("%.2f", res$estimated_difference)`** days |
+| 95% confidence interval | [`r sprintf("%.2f", res$conf_int[1])`, `r sprintf("%.2f", res$conf_int[2])`] days |
+| p-value | `r format(res$p_value, scientific = TRUE, digits = 3)` |
+| Faster observed group | Multi-seller orders had the lower median delivery time. |
+
+</div>
+</div>
+
+<div class="insight-card">
+<div class="card-title">Practical Interpretation</div>
+
+- **Observed median difference:** approximately **`r sprintf("%.2f", res$median_difference)`** days (multi minus single).
+- **Hodges–Lehmann estimated location shift:** **`r sprintf("%.2f", res$estimated_difference)`** days, 95% CI [`r sprintf("%.2f", res$conf_int[1])`, `r sprintf("%.2f", res$conf_int[2])`].
+- **`r res$practical_note`**
+- **`r res$cannot_conclude`**
+
+</div>
+
+<div class="warning-card">
+<div class="card-title">Limitation</div>
+This is observational order-level data. Seller count may correlate with basket size, distance, or category mix rather than causing delivery speed directly.
+</div>
+
+<details class="dash-details">
+<summary>Exclusions and test selection details</summary>
+<div class="details-body">
+
+`r res$selection_reason`
+
+```{r compare-exclusions, echo=FALSE}
+excl <- data.frame(
+  Reason = names(res$excluded),
+  Excluded_Orders = as.integer(unlist(res$excluded)),
+  stringsAsFactors = FALSE
+)
+knitr::kable(excl, align = c("l", "r"), row.names = FALSE)
+```
+
+</div>
+</details>
