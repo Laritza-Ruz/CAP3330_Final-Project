@@ -1,0 +1,614 @@
+[
+  {
+    "objectID": "skills/trend-analysis/SKILL.html",
+    "href": "skills/trend-analysis/SKILL.html",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Summarize monthly completed-order volume and total payment value, compute month-over-month changes, and identify peak and low months after excluding incomplete boundary periods.\n\n\n\nUse this skill for monthly operational reporting, staffing forecasts, and revenue trend reviews.\n\n\n\n\ndata/processed/order_level_analysis.rds\nCompleted orders with valid purchase_date, purchase_month, and nonnegative total_payment_value\n\n\n\n\n\nR/trend_analysis.R\nR/validation_helpers.R\nadditional-skills.qmd\noutput/trend/monthly_trend_summary.csv\noutput/trend/trend_key_results.csv\noutput/trend/monthly_order_trend.png\noutput/trend/monthly_payment_trend.png\n\n\n\n\n\nAggregate by purchase_month\nCompute completed order count, total/average/median payment, and month-over-month percentage changes\nInspect first and last months for incomplete tracking windows\nExclude incomplete boundary and low-volume months from peak/low and MoM headline comparisons\nPlot monthly order and payment trends\n\n\n\n\n\nRun source(\"R/trend_analysis.R\").\nExecute res &lt;- run_trend_analysis(\"data/processed/order_level_analysis.rds\").\nReview date range, exclusions, peak/low months, and largest MoM increase/decrease.\nConfirm outputs saved under output/trend/.\nRender the Monthly Sales Trend section in additional-skills.qmd.\nStop with a warning if fewer than three distinct months remain after filtering.\n\n\n\n\n\nRequired variables must exist\npurchase_month must be valid\nPayment values must be numeric and nonnegative\nNo duplicate month rows after aggregation\nMoM calculations must avoid division by zero\nNegative payment values must trigger warnings\n\n\n\n\nReturn date range, completed orders analyzed, total payment analyzed, monthly summary table, peak/low months, largest MoM changes, exclusion notes, and plot paths.\n\n\n\n\nPeak month: highest complete-month order or payment volume\nMoM increase/decrease: short-term growth or contraction\nNovember 2017 peak: may reflect seasonal demand, but the dataset does not prove cause\n\n\n\n\nIncomplete months (2016-09, 2016-12) and missing 2016-11 must be excluded or annotated. The dataset covers a limited historical window, so long-run seasonality cannot be fully established."
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#purpose",
+    "href": "skills/trend-analysis/SKILL.html#purpose",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Summarize monthly completed-order volume and total payment value, compute month-over-month changes, and identify peak and low months after excluding incomplete boundary periods."
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#when-to-use",
+    "href": "skills/trend-analysis/SKILL.html#when-to-use",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Use this skill for monthly operational reporting, staffing forecasts, and revenue trend reviews."
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#required-inputs",
+    "href": "skills/trend-analysis/SKILL.html#required-inputs",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "data/processed/order_level_analysis.rds\nCompleted orders with valid purchase_date, purchase_month, and nonnegative total_payment_value"
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#files-used",
+    "href": "skills/trend-analysis/SKILL.html#files-used",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "R/trend_analysis.R\nR/validation_helpers.R\nadditional-skills.qmd\noutput/trend/monthly_trend_summary.csv\noutput/trend/trend_key_results.csv\noutput/trend/monthly_order_trend.png\noutput/trend/monthly_payment_trend.png"
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#method",
+    "href": "skills/trend-analysis/SKILL.html#method",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Aggregate by purchase_month\nCompute completed order count, total/average/median payment, and month-over-month percentage changes\nInspect first and last months for incomplete tracking windows\nExclude incomplete boundary and low-volume months from peak/low and MoM headline comparisons\nPlot monthly order and payment trends"
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#procedure",
+    "href": "skills/trend-analysis/SKILL.html#procedure",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Run source(\"R/trend_analysis.R\").\nExecute res &lt;- run_trend_analysis(\"data/processed/order_level_analysis.rds\").\nReview date range, exclusions, peak/low months, and largest MoM increase/decrease.\nConfirm outputs saved under output/trend/.\nRender the Monthly Sales Trend section in additional-skills.qmd.\nStop with a warning if fewer than three distinct months remain after filtering."
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#validation",
+    "href": "skills/trend-analysis/SKILL.html#validation",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Required variables must exist\npurchase_month must be valid\nPayment values must be numeric and nonnegative\nNo duplicate month rows after aggregation\nMoM calculations must avoid division by zero\nNegative payment values must trigger warnings"
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#output",
+    "href": "skills/trend-analysis/SKILL.html#output",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Return date range, completed orders analyzed, total payment analyzed, monthly summary table, peak/low months, largest MoM changes, exclusion notes, and plot paths."
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#interpretation",
+    "href": "skills/trend-analysis/SKILL.html#interpretation",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Peak month: highest complete-month order or payment volume\nMoM increase/decrease: short-term growth or contraction\nNovember 2017 peak: may reflect seasonal demand, but the dataset does not prove cause"
+  },
+  {
+    "objectID": "skills/trend-analysis/SKILL.html#limitation",
+    "href": "skills/trend-analysis/SKILL.html#limitation",
+    "title": "Monthly Sales Trend Analysis",
+    "section": "",
+    "text": "Incomplete months (2016-09, 2016-12) and missing 2016-11 must be excluded or annotated. The dataset covers a limited historical window, so long-run seasonality cannot be fully established."
+  },
+  {
+    "objectID": "skills/model/SKILL.html",
+    "href": "skills/model/SKILL.html",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Train and evaluate a logistic regression model that estimates late-delivery risk from order-level operational, payment, and timing variables.\n\n\n\nUse this skill when screening orders for delivery risk, reviewing predictor associations with lateness, or preparing operational monitoring rules. Do not use it as an automatic penalty or cancellation engine without human review.\n\n\n\n\ndata/processed/order_level_analysis.rds\nDelivered orders with valid estimated and actual delivery dates\nNonmissing late_delivery outcome\nComplete predictor values after documented exclusions\n\n\n\n\n\nR/model_low_reviews.R\nR/validation_helpers.R\nmodel.qmd\noutput/model/model_metrics.csv\noutput/model/confusion_matrix.csv\noutput/model/coefficient_table.csv\noutput/model/odds_ratios.csv\noutput/model/prediction_summary.csv\noutput/model/roc_curve.csv\noutput/model/late_delivery_glm.rds\n\n\n\n\n\nBinary outcome: late_delivery\nPredictors: monetary log1p transforms when justified, item count, seller count, estimated delivery days, installments, purchase month, payment type\nStratified 80/20 train/test split with fixed seed\nglm(..., family = binomial)\nTraining-only threshold selection when class imbalance makes 0.50 ineffective\nTest-set confusion matrix, accuracy, sensitivity, specificity, precision, F1, ROC AUC\n\n\n\n\n\nRun source(\"R/model_low_reviews.R\").\nExecute res &lt;- train_predictive_model(\"data/processed/order_level_analysis.rds\").\nConfirm analysis population filters, class balance, and threshold reason.\nReview test metrics, odds ratios, and saved files in output/model/.\nRender model.qmd for the website page.\nStop and return a warning if outcome does not contain two classes or if required predictors are missing.\n\n\n\n\n\nRequired variables must exist\nOutcome must contain exactly two classes\nPredictors must have valid types and no infinite transformed values\nThreshold must be selected on training data only\nTest data must not be used for fitting or threshold tuning\nWarn that accuracy is misleading under class imbalance and precision is low\n\n\n\n\nReturn model formula, train/test sizes, threshold, confusion matrix, performance metrics, odds-ratio table, top predictors, and output file paths.\n\n\n\n\nHigher predicted probability: higher estimated late-delivery risk\nSensitivity: share of late orders flagged\nPrecision: share of flagged orders that are truly late\nOdds ratios: associative effects; log-transformed monetary terms are not one-real increases\nAssociation does not prove causation\n\n\n\n\nLate deliveries are uncommon, so many flagged orders will be false alarms. The model excludes canceled and undelivered orders and omits spatial routing detail. It is a risk-screening tool, not proof of causal delay drivers."
+  },
+  {
+    "objectID": "skills/model/SKILL.html#purpose",
+    "href": "skills/model/SKILL.html#purpose",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Train and evaluate a logistic regression model that estimates late-delivery risk from order-level operational, payment, and timing variables."
+  },
+  {
+    "objectID": "skills/model/SKILL.html#when-to-use",
+    "href": "skills/model/SKILL.html#when-to-use",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Use this skill when screening orders for delivery risk, reviewing predictor associations with lateness, or preparing operational monitoring rules. Do not use it as an automatic penalty or cancellation engine without human review."
+  },
+  {
+    "objectID": "skills/model/SKILL.html#required-inputs",
+    "href": "skills/model/SKILL.html#required-inputs",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "data/processed/order_level_analysis.rds\nDelivered orders with valid estimated and actual delivery dates\nNonmissing late_delivery outcome\nComplete predictor values after documented exclusions"
+  },
+  {
+    "objectID": "skills/model/SKILL.html#files-used",
+    "href": "skills/model/SKILL.html#files-used",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "R/model_low_reviews.R\nR/validation_helpers.R\nmodel.qmd\noutput/model/model_metrics.csv\noutput/model/confusion_matrix.csv\noutput/model/coefficient_table.csv\noutput/model/odds_ratios.csv\noutput/model/prediction_summary.csv\noutput/model/roc_curve.csv\noutput/model/late_delivery_glm.rds"
+  },
+  {
+    "objectID": "skills/model/SKILL.html#method",
+    "href": "skills/model/SKILL.html#method",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Binary outcome: late_delivery\nPredictors: monetary log1p transforms when justified, item count, seller count, estimated delivery days, installments, purchase month, payment type\nStratified 80/20 train/test split with fixed seed\nglm(..., family = binomial)\nTraining-only threshold selection when class imbalance makes 0.50 ineffective\nTest-set confusion matrix, accuracy, sensitivity, specificity, precision, F1, ROC AUC"
+  },
+  {
+    "objectID": "skills/model/SKILL.html#procedure",
+    "href": "skills/model/SKILL.html#procedure",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Run source(\"R/model_low_reviews.R\").\nExecute res &lt;- train_predictive_model(\"data/processed/order_level_analysis.rds\").\nConfirm analysis population filters, class balance, and threshold reason.\nReview test metrics, odds ratios, and saved files in output/model/.\nRender model.qmd for the website page.\nStop and return a warning if outcome does not contain two classes or if required predictors are missing."
+  },
+  {
+    "objectID": "skills/model/SKILL.html#validation",
+    "href": "skills/model/SKILL.html#validation",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Required variables must exist\nOutcome must contain exactly two classes\nPredictors must have valid types and no infinite transformed values\nThreshold must be selected on training data only\nTest data must not be used for fitting or threshold tuning\nWarn that accuracy is misleading under class imbalance and precision is low"
+  },
+  {
+    "objectID": "skills/model/SKILL.html#output",
+    "href": "skills/model/SKILL.html#output",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Return model formula, train/test sizes, threshold, confusion matrix, performance metrics, odds-ratio table, top predictors, and output file paths."
+  },
+  {
+    "objectID": "skills/model/SKILL.html#interpretation",
+    "href": "skills/model/SKILL.html#interpretation",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Higher predicted probability: higher estimated late-delivery risk\nSensitivity: share of late orders flagged\nPrecision: share of flagged orders that are truly late\nOdds ratios: associative effects; log-transformed monetary terms are not one-real increases\nAssociation does not prove causation"
+  },
+  {
+    "objectID": "skills/model/SKILL.html#limitation",
+    "href": "skills/model/SKILL.html#limitation",
+    "title": "Predict Late Delivery",
+    "section": "",
+    "text": "Late deliveries are uncommon, so many flagged orders will be false alarms. The model excludes canceled and undelivered orders and omits spatial routing detail. It is a risk-screening tool, not proof of causal delay drivers."
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html",
+    "href": "skills/data-quality-audit/SKILL.html",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "Programmatically audit processed and raw Olist datasets for missing values, duplicate keys, date inconsistencies, monetary anomalies, outliers, and relationship integrity before analysis or reporting.\n\n\n\nUse this skill before modeling, before rendering validation pages, and whenever operational metrics look unexpectedly distorted.\n\n\n\n\ndata/processed/order_level_analysis.rds\ndata/processed/seller_order_analysis.rds\nRaw Olist CSV files in data/raw/ when source-table verification is required\n\n\n\n\n\nR/data_quality_audit.R\nR/validation_helpers.R\nvalidation-limitations.qmd\noutput/data_quality/data_quality_issue_summary.csv\noutput/data_quality/missing_value_summary.csv\noutput/data_quality/duplicate_key_summary.csv\noutput/data_quality/date_consistency_summary.csv\noutput/data_quality/monetary_quality_summary.csv\noutput/data_quality/outlier_summary.csv\noutput/data_quality/relationship_summary.csv\noutput/data_quality/data_quality_overview.csv\noutput/data_quality/missing_delivery_dates_by_status.png\n\n\n\n\n\nMeasure dataset dimensions and missingness\nCheck duplicate keys in processed and raw tables\nAudit date, monetary, relationship, outlier, and time-series consistency rules\nClassify issues as Information, Warning, or High\nSave structured summaries without modifying processed data\n\n\n\n\n\nRun source(\"R/data_quality_audit.R\").\nExecute res &lt;- run_data_quality_audit().\nReview issue summary, duplicate keys, missing dates, monetary checks, outliers, and relationships.\nConfirm outputs saved under output/data_quality/.\nRender validation-limitations.qmd.\nStop with a validation error if processed duplicate keys are found or if issue counts exceed dataset sizes.\n\n\n\n\n\nConfirm order_id uniqueness in order-level data\nConfirm seller_id + order_id uniqueness in seller-order data\nEnsure percentages are finite and correctly calculated\nEnsure no required output contains infinite values\nDo not modify processed datasets during audit\n\n\n\n\nReturn issue summary table, duplicate-key results, missing-data findings, date/monetary/outlier/relationship summaries, overview metrics, and visualization path.\n\n\n\n\nHigh: logical inconsistencies requiring action before metric reporting\nWarning: review recommended, context-dependent severity\nInformation: expected patterns or monitoring items\nMissing delivery dates (~2.98%) are often expected for non-delivered orders\n\n\n\n\nThe audit detects structural and logical problems but cannot verify real-world delivery accuracy, customer satisfaction, or business-process correctness for payment differences caused by vouchers or discounts."
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#purpose",
+    "href": "skills/data-quality-audit/SKILL.html#purpose",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "Programmatically audit processed and raw Olist datasets for missing values, duplicate keys, date inconsistencies, monetary anomalies, outliers, and relationship integrity before analysis or reporting."
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#when-to-use",
+    "href": "skills/data-quality-audit/SKILL.html#when-to-use",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "Use this skill before modeling, before rendering validation pages, and whenever operational metrics look unexpectedly distorted."
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#required-inputs",
+    "href": "skills/data-quality-audit/SKILL.html#required-inputs",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "data/processed/order_level_analysis.rds\ndata/processed/seller_order_analysis.rds\nRaw Olist CSV files in data/raw/ when source-table verification is required"
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#files-used",
+    "href": "skills/data-quality-audit/SKILL.html#files-used",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "R/data_quality_audit.R\nR/validation_helpers.R\nvalidation-limitations.qmd\noutput/data_quality/data_quality_issue_summary.csv\noutput/data_quality/missing_value_summary.csv\noutput/data_quality/duplicate_key_summary.csv\noutput/data_quality/date_consistency_summary.csv\noutput/data_quality/monetary_quality_summary.csv\noutput/data_quality/outlier_summary.csv\noutput/data_quality/relationship_summary.csv\noutput/data_quality/data_quality_overview.csv\noutput/data_quality/missing_delivery_dates_by_status.png"
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#method",
+    "href": "skills/data-quality-audit/SKILL.html#method",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "Measure dataset dimensions and missingness\nCheck duplicate keys in processed and raw tables\nAudit date, monetary, relationship, outlier, and time-series consistency rules\nClassify issues as Information, Warning, or High\nSave structured summaries without modifying processed data"
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#procedure",
+    "href": "skills/data-quality-audit/SKILL.html#procedure",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "Run source(\"R/data_quality_audit.R\").\nExecute res &lt;- run_data_quality_audit().\nReview issue summary, duplicate keys, missing dates, monetary checks, outliers, and relationships.\nConfirm outputs saved under output/data_quality/.\nRender validation-limitations.qmd.\nStop with a validation error if processed duplicate keys are found or if issue counts exceed dataset sizes."
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#validation",
+    "href": "skills/data-quality-audit/SKILL.html#validation",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "Confirm order_id uniqueness in order-level data\nConfirm seller_id + order_id uniqueness in seller-order data\nEnsure percentages are finite and correctly calculated\nEnsure no required output contains infinite values\nDo not modify processed datasets during audit"
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#output",
+    "href": "skills/data-quality-audit/SKILL.html#output",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "Return issue summary table, duplicate-key results, missing-data findings, date/monetary/outlier/relationship summaries, overview metrics, and visualization path."
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#interpretation",
+    "href": "skills/data-quality-audit/SKILL.html#interpretation",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "High: logical inconsistencies requiring action before metric reporting\nWarning: review recommended, context-dependent severity\nInformation: expected patterns or monitoring items\nMissing delivery dates (~2.98%) are often expected for non-delivered orders"
+  },
+  {
+    "objectID": "skills/data-quality-audit/SKILL.html#limitation",
+    "href": "skills/data-quality-audit/SKILL.html#limitation",
+    "title": "Data Quality Audit",
+    "section": "",
+    "text": "The audit detects structural and logical problems but cannot verify real-world delivery accuracy, customer satisfaction, or business-process correctness for payment differences caused by vouchers or discounts."
+  },
+  {
+    "objectID": "validation-limitations.html",
+    "href": "validation-limitations.html",
+    "title": "Validation",
+    "section": "",
+    "text": "Business Question\n\nAre missing values, duplicate keys, invalid dates, inconsistent records, or unusual values affecting the reliability of the analysis?",
+    "crumbs": [
+      "Validation"
+    ]
+  },
+  {
+    "objectID": "validation-limitations.html#problems-found",
+    "href": "validation-limitations.html#problems-found",
+    "title": "Validation",
+    "section": "Problems Found",
+    "text": "Problems Found\n\n\n\n\n\n\n\nIssue\nCount\n\n\n\n\nZero-payment orders\n4\n\n\nDelivered orders missing delivery dates\n8\n\n\nCanceled or unavailable orders with delivery dates\n6\n\n\nOrders without item records\n775\n\n\nOrders without payment records\n1\n\n\nOrders with invalid seller count\n775\n\n\nMissing month in trend series\n1\n\n\n\n\n\n\n\n\n\n Missing Delivery Dates by Status\n\n\n\n\n\n\n\nMissing actual delivery dates by order status",
+    "crumbs": [
+      "Validation"
+    ]
+  },
+  {
+    "objectID": "validation-limitations.html#checks-passed",
+    "href": "validation-limitations.html#checks-passed",
+    "title": "Validation",
+    "section": "Checks Passed",
+    "text": "Checks Passed\n\n\n\n\nNo duplicate order keys\n\n\nNo duplicate seller-order keys\n\n\nNo orphaned customers\n\n\nNo orphaned sellers\n\n\nNo negative item prices\n\n\n\n\n\n\nNo negative freight values\n\n\nNo negative payments\n\n\nNo missing purchase dates\n\n\nNo missing estimated-delivery dates\n\n\nNo dates occurring before purchase",
+    "crumbs": [
+      "Validation"
+    ]
+  },
+  {
+    "objectID": "validation-limitations.html#invalid-request-demonstrations",
+    "href": "validation-limitations.html#invalid-request-demonstrations",
+    "title": "Validation",
+    "section": "Invalid Request Demonstrations",
+    "text": "Invalid Request Demonstrations\n\n\nNonexistent variable\n\n\n\n[VALIDATION ERROR] Variable ‘misspelled_payment_column’ does not exist in the dataset. Please verify the column name.\n\n\n\n\n\nIncorrect variable type\n\n\n\n[VALIDATION ERROR] Variable ‘customer_city’ is of type ‘character’, but type ‘numeric’ was expected.\n\n\n\n\n\nMore than two groups\n\n\n\n[VALIDATION ERROR] Grouping variable ‘order_status’ contains 8 groups (delivered, unavailable, shipped, canceled, invoiced, processing, approved, created). Exactly 2 groups are required for this analysis.\n\n\n\n\n\nMissing required date\n\n\n\n[VALIDATION ERROR] Date column ‘purchase_date’ contains only missing or empty values. Analysis cannot proceed.\n\n\n\n\n\nMissing prediction input\n\n\n\n[VALIDATION ERROR] Input variable ‘seller_count’ contains missing values (NA) which are not permitted during prediction.\n\n\n\n\n\nCausal conclusion request\n\n\n\n[VALIDATION ERROR] The conclusion statement contains causal words (cause, proves). Causal claims are prohibited on observational datasets; only associations can be inferred.",
+    "crumbs": [
+      "Validation"
+    ]
+  },
+  {
+    "objectID": "validation-limitations.html#recommendations",
+    "href": "validation-limitations.html#recommendations",
+    "title": "Validation",
+    "section": "Recommendations",
+    "text": "Recommendations\n\n\nResolve delivered orders without delivery dates before reporting delivery KPIs.\nAnnotate missing month 2016-11 and boundary months in trend analysis.\nReview payment differences above tolerance separately from item-plus-freight totals.\nInterpret seller delivery metrics cautiously when multi-seller orders share one delivery outcome.",
+    "crumbs": [
+      "Validation"
+    ]
+  },
+  {
+    "objectID": "validation-limitations.html#limitations",
+    "href": "validation-limitations.html#limitations",
+    "title": "Validation",
+    "section": "Limitations",
+    "text": "Limitations\n\nProgrammatic checks validate structure and logical consistency but cannot detect courier mis-scans or unrecorded customer contacts. Outliers may represent legitimate high-value or long-distance orders.\n\n\n\nFull Audit Details\n\n\n\n\n\n\n\n\n\n\n\n\n\nIssue\nCount\nPercent\nSeverity\n\n\n\n\norder level rows\n99,441\n100.00%\nInformation\n\n\nseller order rows\n100,010\n100.00%\nInformation\n\n\nDuplicate order keys\n0\n0.00%\nInformation\n\n\nDuplicate seller-order keys\n0\n0.00%\nInformation\n\n\nOrders with missing customer records\n0\n0.00%\nInformation\n\n\nItems with missing seller records\n0\n0.00%\nInformation\n\n\nNegative item prices\n0\n0.00%\nInformation\n\n\nNegative freight values\n0\n0.00%\nInformation\n\n\nNegative payment values\n0\n0.00%\nInformation\n\n\nZero-payment orders\n4\n0.00%\nWarning\n\n\nOrders missing purchase dates\n0\n0.00%\nWarning\n\n\nOrders missing estimated delivery dates\n0\n0.00%\nWarning\n\n\nOrders missing actual delivery dates\n2,965\n2.98%\nInformation\n\n\nDelivery dates before purchase\n0\n0.00%\nHigh\n\n\nEstimated delivery before purchase\n0\n0.00%\nHigh\n\n\nApproval before purchase\n0\n0.00%\nHigh\n\n\nDelivered orders missing delivery dates\n8\n0.01%\nHigh\n\n\nCanceled or unavailable orders with delivery dates\n6\n0.01%\nWarning\n\n\nOrders without item records\n775\n0.78%\nWarning\n\n\nOrders without payment records\n1\n0.00%\nWarning\n\n\nPayment totals differ from item plus freight\n1,033\n1.04%\nInformation\n\n\nextreme payment values iqr\n7,866\n7.91%\nInformation\n\n\nextreme freight values iqr\n9,919\n10.09%\nInformation\n\n\nextreme delivery durations iqr\n4,896\n5.08%\nInformation\n\n\nOrders with invalid seller count\n775\n0.78%\nWarning\n\n\nmulti seller orders\n1,278\n1.29%\nInformation\n\n\nMissing month in trend series\n1\n4.35%\nWarning\n\n\n\n\n\n\n\n\n\nDuplicate keys, dates, monetary checks, and relationships\n\n\n\n\n\n\n\nDataset\nKey\nDuplicate Count\n\n\n\n\norder_level_analysis\norder_id\n0\n\n\nseller_order_analysis\nseller_id + order_id\n0\n\n\nraw_orders\norder_id\n0\n\n\nraw_customers\ncustomer_id\n0\n\n\nraw_sellers\nseller_id\n0\n\n\n\n\n\n\n\n\n\n\nCheck\nCount\nPercent\n\n\n\n\nmissing_purchase_dates\n0\n0.0000\n\n\nmissing_estimated_delivery_dates\n0\n0.0000\n\n\nmissing_actual_delivery_dates\n2965\n2.9817\n\n\nactual_delivery_before_purchase\n0\n0.0000\n\n\nestimated_delivery_before_purchase\n0\n0.0000\n\n\napproval_before_purchase\n0\n0.0000\n\n\ndelivered_status_without_actual_delivery_date\n8\n0.0080\n\n\ncanceled_or_unavailable_with_actual_delivery_date\n6\n0.0060\n\n\n\n\n\n\n\n\n\n\nCheck\nCount\nPercent\n\n\n\n\nnegative_item_prices_raw\n0\n0.0000\n\n\nnegative_freight_values_raw\n0\n0.0000\n\n\nnegative_payment_values_raw\n0\n0.0000\n\n\nzero_payment_values_processed\n4\n0.0040\n\n\npayment_difference_exceeds_tolerance\n1033\n1.0388\n\n\nmissing_or_invalid_seller_count\n775\n0.7794\n\n\n\n\n\n\n\n\n\n\nCheck\nCount\n\n\n\n\nmissing_customer_relationship\n0.00\n\n\nmissing_seller_relationship_in_items\n0.00\n\n\norders_without_item_records\n775.00\n\n\norders_without_payment_records\n1.00\n\n\nmulti_seller_orders\n1278.00\n\n\nmulti_seller_order_percentage\n1.29",
+    "crumbs": [
+      "Validation"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Scale Up E-Commerce Analytics",
+    "section": "",
+    "text": "Operational intelligence for orders, fulfillment, seller performance, and data quality.\n  A reproducible R and Quarto dashboard built on the Olist Brazilian E-Commerce dataset for operations managers who need delivery, revenue, seller-risk, and data-trust insights.",
+    "crumbs": [
+      "Dashboard"
+    ]
+  },
+  {
+    "objectID": "index.html#analysis-skills",
+    "href": "index.html#analysis-skills",
+    "title": "Scale Up E-Commerce Analytics",
+    "section": "Analysis Skills",
+    "text": "Analysis Skills\n\n\n\n  \n  Explore Orders\n  Payment, freight, delivery time, and late-delivery distributions.\n  Open skill\n\n\n\n  \n  Compare Deliveries\n  Single-seller vs. multi-seller delivery time comparison.\n  Open skill\n\n\n\n  \n  Late Delivery Model\n  Logistic regression for late-delivery risk screening.\n  Open skill\n\n\n\n  \n  Monthly Trends\n  Completed-order volume and payment value over time.\n  Open skill\n\n\n\n  \n  Seller Prioritization\n  Ranked seller review list based on delivery risk.\n  Open skill\n\n\n\n  \n  Data Quality Audit\n  Missing values, duplicates, and consistency checks.\n  Open skill",
+    "crumbs": [
+      "Dashboard"
+    ]
+  },
+  {
+    "objectID": "index.html#operational-preview",
+    "href": "index.html#operational-preview",
+    "title": "Scale Up E-Commerce Analytics",
+    "section": "Operational Preview",
+    "text": "Operational Preview\n\n\n Monthly Completed Order Volume\n\n\n\n\n\nMonthly order trend preview",
+    "crumbs": [
+      "Dashboard"
+    ]
+  },
+  {
+    "objectID": "index.html#intended-user-decision-supported",
+    "href": "index.html#intended-user-decision-supported",
+    "title": "Scale Up E-Commerce Analytics",
+    "section": "Intended User & Decision Supported",
+    "text": "Intended User & Decision Supported\n\nIntended user: E-commerce operations manager responsible for fulfillment, seller performance, and operational reporting.\nDecision supported: Delivery SLAs, fulfillment structure review, late-delivery screening, staffing and revenue planning, seller audit prioritization, and data-trust validation before reporting.",
+    "crumbs": [
+      "Dashboard"
+    ]
+  },
+  {
+    "objectID": "dataset.html",
+    "href": "dataset.html",
+    "title": "Data Overview",
+    "section": "",
+    "text": "The dashboard uses the Olist Brazilian E-Commerce Public Dataset. Raw CSV files are stored in data/raw/ and transformed into two processed analytical tables used by all six skills.\n\n\n\n\n\n\n\n\n6\n\n\nSource Tables\n\n\nOlist CSV files in data/raw/\n\n\n\n\n\n\n\n\n\n99,441\n\n\nOrders\n\n\nProcessed order-level rows\n\n\n\n\n\n\n\n\n\n3,095\n\n\nSellers\n\n\nUnique merchants\n\n\n\n\n\n\n\n\n\n2\n\n\nProcessed Analysis Tables\n\n\nOrder-level and seller-order\n\n\n\n\n\n\n Source Table Summary\n\n\n\n\n\n\nFile\nLocation\nRows\n\n\n\n\nolist_orders_dataset.csv\ndata/raw/\n99,441\n\n\nolist_customers_dataset.csv\ndata/raw/\n99,441\n\n\nolist_order_items_dataset.csv\ndata/raw/\n112,650\n\n\nolist_order_payments_dataset.csv\ndata/raw/\n103,886\n\n\nolist_products_dataset.csv\ndata/raw/\n32,951\n\n\nolist_sellers_dataset.csv\ndata/raw/\n3,095\n\n\n\n\n\n\n\n\n\n Unit of Observation\n\n\n\nOrder-level table: one row per order_id\nSeller-order table: one row per seller_id + order_id\nItems and payments are aggregated before joining to prevent revenue inflation\n\n\n\n\n\n Processed Datasets\n\n\n\n\n\nDataset\nRows\nUse\n\n\n\n\norder_level_analysis\n99,441\nExplore, compare, model, trends\n\n\nseller_order_analysis\n100,010\nSeller prioritization\n\n\n\n\n\n\n\n\n Data Workflow\n\n\nflowchart LR\n  A[Raw CSV Tables] --&gt; B[Pre-aggregate Items and Payments]\n  B --&gt; C[Order-Level Table]\n  B --&gt; D[Seller-Order Table]\n  C --&gt; E[Skills 1-4 and 6]\n  D --&gt; F[Skill 5]\n\n\n\n\n Data Quality Notes\n\n\n\nNo duplicate processed keys detected\nMissing actual delivery dates affect approximately 2.98% of orders\nPayment totals may differ from item plus freight because of vouchers and adjustments\nFull audit details are on the Validation page\n\n\n\n\n\nTechnical join and field details\n\n\nJoining strategy: payments and order items are aggregated to one row per order_id before joining to orders.\nKey processed fields: total_payment_value, total_freight_value, actual_delivery_days, late_delivery, single_seller_order, purchase_month.\nOptional missing files: product category translation and geolocation data are not used in the six implemented skills.",
+    "crumbs": [
+      "Data Overview"
+    ]
+  },
+  {
+    "objectID": "additional-skills.html",
+    "href": "additional-skills.html",
+    "title": "Operations",
+    "section": "",
+    "text": "A. Monthly Trends\n\n\n\n\nBusiness Question\n\nHow did monthly completed-order volume and total customer payment value change over time?\n\n\n\n\n\n\n\n\n2017-11\n\n\nPeak Month\n\n\n7,289 orders\n\n\n\n\n\n\n\n\n\n96,478\n\n\nCompleted Orders\n\n\n2016-09 to 2018-08\n\n\n\n\n\n\n\n\n\nR$ 15,422,462\n\n\nTotal Payment\n\n\nAnalyzed completed orders\n\n\n\n\n\n\n\n\n\n2017-02\n\n\nLargest Increase\n\n\n120.4% MoM\n\n\n\n\n\n\n\n Monthly Order Volume\n\n\n\n\n\nMonthly order trend\n\n\n\n\n\n\n Monthly Payment Value\n\n\n\n\n\nMonthly payment trend\n\n\n\n\n\n\n\n Key Months\n\n\n\n\n\n\n\nMonth\nCompleted Orders\nPayment (R$)\nOrders MoM %\n\n\n\n\n2017-02\n1,653\n271,298.7\n120.40\n\n\n2017-11\n7,289\n1,153,528.1\n62.77\n\n\n2017-12\n5,513\n843,199.2\n-24.37\n\n\n\n\n\n\n\n\nNote: 2016-09 was a partial first month, 2016-11 is absent from the series, and 2016-12 contains only one completed order. These months are excluded from headline comparisons.\n\n\nThe available period is not sufficient to prove recurring seasonality.\n\n\n\nFull monthly trend table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMonth\nCompleted Orders\nTotal Payment (R\\()| Avg Payment (R\\))\nOrder MoM %\nPayment MoM %\n\n\n\n\n\n2016-10\n265\n46,566.71\n175.72\n26,400.00\nNA\n\n\n2017-01\n750\n127,545.67\n170.06\n74,900.00\n649,979.87\n\n\n2017-02\n1,653\n271,298.65\n164.13\n120.40\n112.71\n\n\n2017-03\n2,546\n414,369.39\n162.75\n54.02\n52.74\n\n\n2017-04\n2,303\n390,952.18\n169.76\n-9.54\n-5.65\n\n\n2017-05\n3,546\n567,066.73\n159.92\n53.97\n45.05\n\n\n2017-06\n3,135\n490,225.60\n156.37\n-11.59\n-13.55\n\n\n2017-07\n3,872\n566,403.93\n146.28\n23.51\n15.54\n\n\n2017-08\n4,193\n646,000.61\n154.07\n8.29\n14.05\n\n\n2017-09\n4,150\n701,169.99\n168.96\n-1.03\n8.54\n\n\n2017-10\n4,478\n751,140.27\n167.74\n7.90\n7.13\n\n\n2017-11\n7,289\n1,153,528.05\n158.26\n62.77\n53.57\n\n\n2017-12\n5,513\n843,199.17\n152.95\n-24.37\n-26.90\n\n\n2018-01\n7,069\n1,078,606.86\n152.58\n28.22\n27.92\n\n\n2018-02\n6,555\n966,510.88\n147.45\n-7.27\n-10.39\n\n\n2018-03\n7,003\n1,120,678.00\n160.03\n6.83\n15.95\n\n\n2018-04\n6,798\n1,132,933.95\n166.66\n-2.93\n1.09\n\n\n2018-05\n6,749\n1,128,836.69\n167.26\n-0.72\n-0.36\n\n\n2018-06\n6,099\n1,012,090.68\n165.94\n-9.63\n-10.34\n\n\n2018-07\n6,159\n1,027,903.86\n166.89\n0.98\n1.56\n\n\n2018-08\n6,351\n985,414.28\n155.16\n3.12\n-4.13\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nB. Seller Prioritization\n\n\n\n\nBusiness Question\n\nWhich sellers should an operations manager review first based on delivery performance and operational exposure?\n\n\n\n\n\n\n\n\n3,095\n\n\nSellers Analyzed\n\n\nAll sellers in dataset\n\n\n\n\n\n\n\n\n\n804\n\n\nEligible Sellers\n\n\n≥ 20 records and ≥ 20 valid deliveries\n\n\n\n\n\n\n\n\n\n0.518\n\n\nTop Priority Score\n\n\nHighest ranked seller\n\n\n\n\n\n\n\n\n\n2,291\n\n\nExcluded Sellers\n\n\nBelow eligibility rule\n\n\n\n\n\n\n\n Top 10 Priority Scores\n\n\n\n\n\nSeller prioritization plot\n\n\n\n\n\n\n Top 10 Sellers\n\n\n\n\n\n\n\nRank\nSeller ID\nValid Deliveries\nLate Rate\nPriority Score\n\n\n\n\n1\n821fb029\n24\n0.375\n0.518\n\n\n2\nede0c036\n43\n0.349\n0.464\n\n\n3\nad781527\n38\n0.316\n0.431\n\n\n4\n835f0f78\n42\n0.310\n0.424\n\n\n5\nf76a3b13\n24\n0.375\n0.406\n\n\n6\n66e0557e\n30\n0.267\n0.395\n\n\n7\n2a1348e9\n48\n0.271\n0.378\n\n\n8\n54965bbe\n73\n0.301\n0.366\n\n\n9\nbc47d5d1\n21\n0.095\n0.357\n\n\n10\n06a2c3af\n389\n0.231\n0.345\n\n\n\n\n\n\nFull ranking: output/seller/seller_priority_ranking.csv\n\n\n\n\n\n\nPractical Interpretation\n\nTop-ranked sellers combine elevated late-delivery rates with enough delivered volume to affect many customers. Priority scores weight late-delivery rate and valid delivery volume.\n\n\nDelivery outcomes are shared at the order level for multi-seller orders.\n\n\n\n\n\n\n\n\nC. Data Quality Summary\n\n\n\n\nBusiness Question\n\nAre missing values, duplicate keys, inconsistent dates, or payment mismatches affecting analysis reliability?\n\n\n\n\n\n\n\n\n27\n\n\nProgrammatic Checks\n\n\nAutomated audit rules\n\n\n\n\n\n\n\n\n\n8\n\n\nDelivered Missing Dates\n\n\nDelivered orders without delivery date\n\n\n\n\n\n\n\n\n\n6\n\n\nCanceled With Dates\n\n\nCanceled/unavailable with delivery date\n\n\n\n\n\n\n\n\n\n0\n\n\nDuplicate Processed Keys\n\n\nOrder and seller-order keys\n\n\n\n\n\n\n Priority Issues\n\n\n\n\n\n\n\nIssue\nCount\n\n\n\n\nZero-payment orders\n4\n\n\nDelivered orders missing delivery dates\n8\n\n\nCanceled or unavailable orders with delivery dates\n6\n\n\nOrders without item records\n775\n\n\nOrders without payment records\n1\n\n\nOrders with invalid seller count\n775\n\n\nMissing month in trend series\n1\n\n\n\n\n\n\n\n\nFull audit details, checks passed, and invalid-request demonstrations are on the Validation page.",
+    "crumbs": [
+      "Operations"
+    ]
+  },
+  {
+    "objectID": "compare.html",
+    "href": "compare.html",
+    "title": "Compare Deliveries",
+    "section": "",
+    "text": "Business Question\n\nDo multi-seller orders take longer to deliver than single-seller orders?\n\n\n\n\n\n\n\n\n10.25 days\n\n\nSingle-Seller Median\n\n\n95,195 orders\n\n\n\n\n\n\n\n\n\n7.93 days\n\n\nMulti-Seller Median\n\n\n1,275 orders\n\n\n\n\n\n\n\n\n\n-2.32 days\n\n\nObserved Median Difference\n\n\nMulti minus single\n\n\n\n\n\n\n\n\n\n-2.28 days\n\n\nHodges-Lehmann Shift\n\n\n95% CI location estimate\n\n\n\n\n\n\n\n Delivery Time Comparison\n\n\n\n\n\nDelivery comparison boxplot\n\n\n\n\n\n\n Group Summary\n\n\n\n\n\n\n\nGroup\nN\nMedian Days\nMean Days\nSD\n\n\n\n\nSingle-seller order\n95,195\n10.25\n12.60\n9.58\n\n\nMulti-seller order\n1,275\n7.93\n9.14\n5.61\n\n\n\n\n\n\n\n\n\n\n Statistical Results\n\n\n\n\n\n\n\n\n\nResult\nValue\n\n\n\n\nSelected test\nWilcoxon rank-sum test\n\n\nObserved median difference (multi − single)\n-2.32 days\n\n\nHodges–Lehmann location shift (multi − single)\n-2.28 days\n\n\n95% confidence interval\n[-2.61, -1.99] days\n\n\np-value\n5.1e-50\n\n\nFaster observed group\nMulti-seller orders had the lower median delivery time.\n\n\n\n\n\n\n\nPractical Interpretation\n\n\nObserved median difference: approximately -2.32 days (multi minus single).\nHodges–Lehmann estimated location shift: -2.28 days, 95% CI [-2.61, -1.99].\nThe median difference is modest and may matter for SLA planning but is not a large operational gap on its own.\nThis analysis cannot prove that multiple sellers directly cause longer delivery. Seller count may correlate with order complexity, product mix, distance, or seller location.\n\n\n\n\nLimitation\n\nThis is observational order-level data. Seller count may correlate with basket size, distance, or category mix rather than causing delivery speed directly.\n\n\n\nExclusions and test selection details\n\n\nWilcoxon rank-sum test selected because delivery times are right-skewed (skew single = 3.83, multi = 1.62) with 5.05% tail outliers. This test compares delivery-time distributions and is more appropriate than a mean-based t-test when extreme delivery delays dominate the upper tail.\n\n\n\n\n\nReason\nExcluded_Orders\n\n\n\n\nmissing_seller_count\n0\n\n\nseller_count_below_one\n775\n\n\nmissing_delivery_days\n8\n\n\nnegative_delivery_days\n0\n\n\ncanceled_or_unavailable\n1234\n\n\nnot_delivered\n2963",
+    "crumbs": [
+      "Compare Deliveries"
+    ]
+  },
+  {
+    "objectID": "explore.html",
+    "href": "explore.html",
+    "title": "Explore Orders",
+    "section": "",
+    "text": "Business Question\n\nWhat do order value, freight cost, delivery time, order status, and late-delivery patterns look like in the Olist order-level dataset?\n\n\n\n\n\n\n\n\n99,441\n\n\nTotal Orders\n\n\nAll processed orders\n\n\n\n\n\n\n\n\n\nR$ 105.29\n\n\nMedian Payment\n\n\nTypical order value\n\n\n\n\n\n\n\n\n\n10.22 days\n\n\nMedian Delivery\n\n\nCompleted orders\n\n\n\n\n\n\n\n\n\n8.11%\n\n\nLate-Delivery Rate\n\n\nDelivered orders\n\n\n\n\n\n\n\nTypical Order Value\n\n\nMedian: R$ 105.29\n\n\nMean: R$ 160.99\n\n\n\n\nTypical Freight Cost\n\n\nMedian: R$ 17.09\n\n\nMean: R$ 22.65\n\n\n\n\nDelivery Time\n\n\nMedian: 10.22 days\n\n\nMean: 12.56 days\n\n\n\n\n\n\n Payment Distribution\n\n\n\n\n\nPayment distribution\n\n\n\n\n\n\n Order Status Mix\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Delivery Time Distribution\n\n\n\n\n\nDelivery days distribution\n\n\n\n\n\n\n Late vs. On-Time Deliveries\n\n\n\n\n\nLate delivery distribution\n\n\n\n\n\n\n\n\nMain Findings\n\n\n99,441 total orders; 97.02% delivered.\nTypical order value is R$ 105.29 (median), above the mean because high-value orders pull the average up.\nTypical freight is R$ 17.09; median delivery time is 10.22 days.\nLate-delivery rate is 8.11% among completed orders with valid delivery durations.\n\n\n\n\nPractical Interpretation\n\nUse medians for customer-facing benchmarks. Track missing delivery dates alongside late deliveries because both affect service reporting quality.\n\n\n\nDelivery metrics describe successful fulfillment, not the full order lifecycle. Means are inflated by extreme orders.\n\n\n\nTechnical method and validation\n\n\nDescriptive statistics are computed from the processed order-level dataset. Required variables are validated before analysis.\n\n\n\n\n\nVariable\nMissing_Count\n\n\n\n\ntotal_payment_value\n0\n\n\ntotal_freight_value\n0\n\n\nactual_delivery_days\n2965\n\n\ndelivery_delay_days\n2965\n\n\nlate_delivery\n2965\n\n\ncompleted_order\n0\n\n\ncanceled_or_unavailable\n0\n\n\norder_status\n0\n\n\nseller_count\n0\n\n\nsingle_seller_order\n0",
+    "crumbs": [
+      "Explore Orders"
+    ]
+  },
+  {
+    "objectID": "model.html",
+    "href": "model.html",
+    "title": "Late Delivery Model",
+    "section": "",
+    "text": "Business Question\n\nWhich available order characteristics are associated with whether an order is delivered late?\n\n\n\n\n\n\n\n\n0.721\n\n\nROC AUC\n\n\nTest-set discrimination\n\n\n\n\n\n\n\n\n\n67.1%\n\n\nSensitivity\n\n\nRecall on test set\n\n\n\n\n\n\n\n\n\n15.3%\n\n\nPrecision\n\n\nPositive predictive value\n\n\n\n\n\n\n\n\n\n8.11%\n\n\nLate Prevalence\n\n\nAnalysis sample\n\n\n\n\n\n\n\n ROC Curve\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Confusion Matrix (Test Set)\n\n\n\n\n\n\n\nPred On-Time\n\n\nPred Late\n\n\nActual On-Time\n\n\n11,912\n\n\n5,817\n\n\nActual Late\n\n\n515\n\n\n1,050\n\n\n\nThreshold: 0.081 | Accuracy 67.2% | F1 24.9%\n\n\n\n\n\n\n Top Predictor Odds Ratios\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Model Summary\n\n\n\n\n\nItem\nValue\n\n\n\n\nAnalysis sample\n96,469 orders\n\n\nTraining / test split\n77,175 / 19,294\n\n\nThreshold selection\nTraining-only Youden’s J\n\n\nSelected threshold\n0.081\n\n\nSpecificity\n67.2%\n\n\n\nKey predictors used in the model:\n\nOrder value\nFreight cost\nNumber of items\nNumber of sellers\nEstimated delivery window\nMaximum payment installments\nPurchase month\nPrimary payment type\n\n\nSkewed monetary variables were log-transformed before modeling.\n\n\n\n\n\n Key Predictors\n\n\n\n\n\n\n\nPredictor\nOdds Ratio\np-value\n\n\n\n\nseller_count\n0.1048\n&lt; 0.001\n\n\nlog1p_total_freight_value\n1.9037\n&lt; 0.001\n\n\nitem_count\n0.6196\n&lt; 0.001\n\n\nlog1p_total_item_price\n0.9164\n0.00449\n\n\nestimated_delivery_days\n0.9496\n&lt; 0.001\n\n\nmaximum_installments\n1.0034\n0.0112\n\n\n\n\n\n\n\n\n\nPractical Interpretation\n\n\nAccuracy near 67% is misleading under class imbalance.\nPrecision is only 15.3%; use as a screening tool, not an automatic decision rule.\nAssociation does not prove causation. Log-transformed monetary odds ratios are not one-real changes.\n\n\n\n\nLimitation\n\nLate deliveries are imbalanced, precision remains low, and undelivered or canceled orders are excluded from the modeling sample.\n\n\n\nFull Model Coefficients\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPredictor\nOdds Ratio\n95% CI Lower\n95% CI Upper\np-value\n\n\n\n\n(Intercept)\n0.0804\n0.0224\n0.2893\n0.0575\n\n\nestimated_delivery_days\n0.9496\n0.9454\n0.9539\n&lt; 0.001\n\n\nitem_count\n0.6196\n0.5782\n0.6639\n&lt; 0.001\n\n\nlog1p_total_freight_value\n1.9037\n1.7819\n2.0339\n&lt; 0.001\n\n\nlog1p_total_item_price\n0.9164\n0.8843\n0.9497\n0.00449\n\n\nmaximum_installments\n1.0034\n0.9919\n1.0151\n0.0112\n\n\nprimary_payment_typecredit_card\n0.7610\n0.7086\n0.8172\n&lt; 0.001\n\n\nprimary_payment_typedebit_card\n0.7420\n0.5916\n0.9306\n0.534\n\n\nprimary_payment_typevoucher\n0.6833\n0.5774\n0.8086\n0.0134\n\n\npurchase_month2016-12\n0.0000\n0.0000\n0.0019\n0.931\n\n\npurchase_month2017-01\n0.2479\n0.0712\n0.8633\n0.817\n\n\npurchase_month2017-02\n0.1878\n0.0569\n0.6197\n0.432\n\n\npurchase_month2017-03\n0.2907\n0.0906\n0.9323\n0.906\n\n\npurchase_month2017-04\n0.4452\n0.1393\n1.4226\n0.552\n\n\npurchase_month2017-05\n0.1827\n0.0569\n0.5868\n0.371\n\n\npurchase_month2017-06\n0.1925\n0.0599\n0.6191\n0.421\n\n\npurchase_month2017-07\n0.1758\n0.0548\n0.5641\n0.336\n\n\npurchase_month2017-08\n0.1631\n0.0508\n0.5233\n0.276\n\n\npurchase_month2017-09\n0.2494\n0.0781\n0.7964\n0.701\n\n\npurchase_month2017-10\n0.2682\n0.0841\n0.8555\n0.792\n\n\npurchase_month2017-11\n0.7858\n0.2481\n2.4889\n0.121\n\n\npurchase_month2017-12\n0.5662\n0.1788\n1.7932\n0.321\n\n\npurchase_month2018-01\n0.3923\n0.1238\n1.2436\n0.711\n\n\npurchase_month2018-02\n1.0196\n0.3222\n3.2259\n0.0463\n\n\npurchase_month2018-03\n1.2002\n0.3789\n3.8014\n0.0232\n\n\npurchase_month2018-04\n0.2728\n0.0858\n0.8672\n0.809\n\n\npurchase_month2018-05\n0.4096\n0.1290\n1.3007\n0.656\n\n\npurchase_month2018-06\n0.0729\n0.0225\n0.2359\n0.0159\n\n\npurchase_month2018-07\n0.1776\n0.0556\n0.5671\n0.338\n\n\npurchase_month2018-08\n0.3681\n0.1154\n1.1735\n0.787\n\n\nseller_count\n0.1048\n0.0615\n0.1786\n&lt; 0.001\n\n\n\n\n\n\n\n\n\nMethod, population, and class distribution\n\n\nDelivered orders with valid estimated and actual delivery dates, complete predictors, and non-not_paid payment type.\n\n\n\nPartition\nOn-Time (0)\nLate (1)\n\n\n\n\nTraining\n70,915\n6,260\n\n\nTest\n17,729\n1,565\n\n\n\nThreshold 0.081 selected on training data using Youden’s J because class imbalance (late prevalence = 8.11%) made the default 0.50 threshold predict almost no late orders (training sensitivity = 0.001, F1 = 0.002 at 0.50).",
+    "crumbs": [
+      "Late Delivery"
+    ]
+  },
+  {
+    "objectID": "skills/compare/SKILL.html",
+    "href": "skills/compare/SKILL.html",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Determine whether multi-seller orders take longer to deliver than single-seller orders by comparing actual_delivery_days across the two seller-count groups.\n\n\n\nUse this skill when evaluating fulfillment complexity, seller coordination efficiency, or delivery SLAs for orders fulfilled by one versus multiple sellers.\n\n\n\n\nProcessed order-level dataset: data/processed/order_level_analysis.rds\nValid rows with non-missing seller_count, non-missing non-negative actual_delivery_days, delivered status, and no canceled/unavailable status\n\n\n\n\n\ndata/processed/order_level_analysis.rds\nR/compare_deliveries.R\nR/validation_helpers.R\noutput/compare_group_summary.csv\noutput/compare_exclusion_counts.csv\nimages/delivery_comparison_boxplot.png\n\n\n\n\n\nFilter to analysis-ready delivered orders with valid seller counts and delivery durations.\nLabel groups as Single-seller order and Multi-seller order using single_seller_order.\nCompute sample size, mean, median, SD, and IQR for each group.\nInspect skewness and outlier rates to choose either a Welch t-test or Wilcoxon rank-sum test.\nReport estimated difference, 95% confidence interval when supported, test statistic, p-value, and a boxplot comparison.\n\n\n\n\n\nRun source(\"R/compare_deliveries.R\").\nExecute res &lt;- run_compare_deliveries(\"data/processed/order_level_analysis.rds\").\nConfirm both single_seller_order and actual_delivery_days exist and pass validation.\nReview exclusion counts, group summaries, selected test, and saved outputs.\nIf either group has fewer than 10 observations, stop with a validation error.\nIf invalid negative delivery durations are encountered during filtering, exclude them and report the exclusion count.\nDo not rebuild the processed dataset unless a confirmed schema error is found.\n\n\n\n\n\nBoth required variables must exist.\nOutcome variable must be numeric.\nGrouping variable must produce exactly two valid groups: 0 = multi-seller, 1 = single-seller.\nBoth groups must contain enough observations for testing.\nMissing values and invalid delivery durations must be excluded consistently with documented counts.\nDo not choose a test only because it yields significance; document why the selected test is defensible.\n\n\n\n\nReturn a list containing:\n\nsample size, mean, median, SD, and IQR for each group\nselected test name and selection reason\nestimated difference and 95% confidence interval when available\ntest statistic and p-value\nfaster group statement, practical meaningfulness note, and non-causal disclaimer\nsaved comparison table, exclusion table, and boxplot path\n\nStop after returning these outputs. Do not run predictive modeling or additional skills in the same step.\n\n\n\n\np-value below 0.05: evidence of a statistically detectable group difference in the metric targeted by the selected test.\nMedian difference: practical delivery-time gap between groups.\nWilcoxon result: estimates a location shift between delivery-time distributions; do not describe it as a difference in means.\nWelch result: estimates a difference in mean delivery times.\n\n\n\n\nSeller count may be associated with order complexity, product mix, shipping distance, or seller geography. This observational comparison cannot prove that multiple sellers directly cause longer delivery. Order-level delivery time also aggregates seller-level effects when multiple merchants participate in one order."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#purpose",
+    "href": "skills/compare/SKILL.html#purpose",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Determine whether multi-seller orders take longer to deliver than single-seller orders by comparing actual_delivery_days across the two seller-count groups."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#when-to-use",
+    "href": "skills/compare/SKILL.html#when-to-use",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Use this skill when evaluating fulfillment complexity, seller coordination efficiency, or delivery SLAs for orders fulfilled by one versus multiple sellers."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#required-inputs",
+    "href": "skills/compare/SKILL.html#required-inputs",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Processed order-level dataset: data/processed/order_level_analysis.rds\nValid rows with non-missing seller_count, non-missing non-negative actual_delivery_days, delivered status, and no canceled/unavailable status"
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#files-used",
+    "href": "skills/compare/SKILL.html#files-used",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "data/processed/order_level_analysis.rds\nR/compare_deliveries.R\nR/validation_helpers.R\noutput/compare_group_summary.csv\noutput/compare_exclusion_counts.csv\nimages/delivery_comparison_boxplot.png"
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#method",
+    "href": "skills/compare/SKILL.html#method",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Filter to analysis-ready delivered orders with valid seller counts and delivery durations.\nLabel groups as Single-seller order and Multi-seller order using single_seller_order.\nCompute sample size, mean, median, SD, and IQR for each group.\nInspect skewness and outlier rates to choose either a Welch t-test or Wilcoxon rank-sum test.\nReport estimated difference, 95% confidence interval when supported, test statistic, p-value, and a boxplot comparison."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#procedure",
+    "href": "skills/compare/SKILL.html#procedure",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Run source(\"R/compare_deliveries.R\").\nExecute res &lt;- run_compare_deliveries(\"data/processed/order_level_analysis.rds\").\nConfirm both single_seller_order and actual_delivery_days exist and pass validation.\nReview exclusion counts, group summaries, selected test, and saved outputs.\nIf either group has fewer than 10 observations, stop with a validation error.\nIf invalid negative delivery durations are encountered during filtering, exclude them and report the exclusion count.\nDo not rebuild the processed dataset unless a confirmed schema error is found."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#validation",
+    "href": "skills/compare/SKILL.html#validation",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Both required variables must exist.\nOutcome variable must be numeric.\nGrouping variable must produce exactly two valid groups: 0 = multi-seller, 1 = single-seller.\nBoth groups must contain enough observations for testing.\nMissing values and invalid delivery durations must be excluded consistently with documented counts.\nDo not choose a test only because it yields significance; document why the selected test is defensible."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#output",
+    "href": "skills/compare/SKILL.html#output",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Return a list containing:\n\nsample size, mean, median, SD, and IQR for each group\nselected test name and selection reason\nestimated difference and 95% confidence interval when available\ntest statistic and p-value\nfaster group statement, practical meaningfulness note, and non-causal disclaimer\nsaved comparison table, exclusion table, and boxplot path\n\nStop after returning these outputs. Do not run predictive modeling or additional skills in the same step."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#interpretation",
+    "href": "skills/compare/SKILL.html#interpretation",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "p-value below 0.05: evidence of a statistically detectable group difference in the metric targeted by the selected test.\nMedian difference: practical delivery-time gap between groups.\nWilcoxon result: estimates a location shift between delivery-time distributions; do not describe it as a difference in means.\nWelch result: estimates a difference in mean delivery times."
+  },
+  {
+    "objectID": "skills/compare/SKILL.html#limitation",
+    "href": "skills/compare/SKILL.html#limitation",
+    "title": "Compare Single-Seller and Multi-Seller Orders",
+    "section": "",
+    "text": "Seller count may be associated with order complexity, product mix, shipping distance, or seller geography. This observational comparison cannot prove that multiple sellers directly cause longer delivery. Order-level delivery time also aggregates seller-level effects when multiple merchants participate in one order."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html",
+    "href": "skills/explore/SKILL.html",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Calculate baseline descriptive statistics and visualizations for order value, freight cost, delivery time, order status, and late-delivery patterns using the processed order-level dataset.\n\n\n\nUse this skill at the start of an operational review, when establishing fulfillment and pricing benchmarks, or before running comparative or predictive skills that depend on clean order-level metrics.\n\n\n\n\nProcessed order-level dataset: data/processed/order_level_analysis.rds\nOptional override paths for output directories\n\n\n\n\n\ndata/processed/order_level_analysis.rds\nR/explore_orders.R\nR/validation_helpers.R\noutput/explore_summary_table.csv\noutput/explore_order_status_table.csv\noutput/explore_missing_counts.csv\nimages/order_value_distribution.png\nimages/late_delivery_distribution.png\nimages/delivery_days_distribution.png\n\n\n\n\n\nLoad the processed order-level dataset with one row per order_id.\nValidate required variables, numeric types, and minimum non-missing observations.\nCompute counts, percentages, means, medians, standard deviations, five-number summaries, late-delivery rates, missing-value counts, and unique-value counts.\nGenerate at least two R base graphics: payment-value distribution and late-delivery/status distribution.\nSave summary tables to output/ and plots to images/.\n\n\n\n\n\nRun source(\"R/explore_orders.R\").\nExecute res &lt;- run_explore_orders(\"data/processed/order_level_analysis.rds\").\nConfirm the script validates required variables: total_payment_value, total_freight_value, actual_delivery_days, late_delivery, completed_order, canceled_or_unavailable, and order_status.\nReview returned summary values and saved files in output/ and images/.\nIf validation fails or fewer than 10 valid delivered orders exist, stop and return the validation error message.\nIf negative monetary or delivery values are present, continue but surface the warning messages in the response.\n\n\n\n\n\nRequired variables must exist in the processed dataset.\nMonetary and delivery variables must be numeric.\nAt least 10 non-missing payment values and 10 delivered orders with valid delivery dates must be available.\nDate-dependent summaries require valid purchase dates.\nNegative monetary or delivery values must trigger warnings.\nDo not rebuild the processed dataset unless a confirmed schema error is found.\n\n\n\n\nReturn a list containing:\n\ntotal order count and delivered/canceled counts with percentages\npayment mean, median, SD, and five-number summary\nfreight mean and median\ndelivery mean and median for delivered orders\nlate-delivery count and rate\nmissing-value and unique-value counts\nsaved summary tables and plot paths\n\nStop after returning these outputs. Do not run comparative or predictive skills in the same step.\n\n\n\n\nMedian payment value: typical order size for SLA and promotion planning.\nMedian freight value: typical shipping cost burden per order.\nLate-delivery rate: service-quality baseline among delivered orders.\nOrder status mix: operational health snapshot across fulfillment outcomes.\n\n\n\n\nPayment and delivery metrics are right-skewed, so means can be distorted by extreme orders. Delivery metrics exclude canceled, unavailable, and undelivered orders, which introduces survival bias toward successful shipments. Review scores are unavailable and must not be simulated."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#purpose",
+    "href": "skills/explore/SKILL.html#purpose",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Calculate baseline descriptive statistics and visualizations for order value, freight cost, delivery time, order status, and late-delivery patterns using the processed order-level dataset."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#when-to-use",
+    "href": "skills/explore/SKILL.html#when-to-use",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Use this skill at the start of an operational review, when establishing fulfillment and pricing benchmarks, or before running comparative or predictive skills that depend on clean order-level metrics."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#required-inputs",
+    "href": "skills/explore/SKILL.html#required-inputs",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Processed order-level dataset: data/processed/order_level_analysis.rds\nOptional override paths for output directories"
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#files-used",
+    "href": "skills/explore/SKILL.html#files-used",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "data/processed/order_level_analysis.rds\nR/explore_orders.R\nR/validation_helpers.R\noutput/explore_summary_table.csv\noutput/explore_order_status_table.csv\noutput/explore_missing_counts.csv\nimages/order_value_distribution.png\nimages/late_delivery_distribution.png\nimages/delivery_days_distribution.png"
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#method",
+    "href": "skills/explore/SKILL.html#method",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Load the processed order-level dataset with one row per order_id.\nValidate required variables, numeric types, and minimum non-missing observations.\nCompute counts, percentages, means, medians, standard deviations, five-number summaries, late-delivery rates, missing-value counts, and unique-value counts.\nGenerate at least two R base graphics: payment-value distribution and late-delivery/status distribution.\nSave summary tables to output/ and plots to images/."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#procedure",
+    "href": "skills/explore/SKILL.html#procedure",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Run source(\"R/explore_orders.R\").\nExecute res &lt;- run_explore_orders(\"data/processed/order_level_analysis.rds\").\nConfirm the script validates required variables: total_payment_value, total_freight_value, actual_delivery_days, late_delivery, completed_order, canceled_or_unavailable, and order_status.\nReview returned summary values and saved files in output/ and images/.\nIf validation fails or fewer than 10 valid delivered orders exist, stop and return the validation error message.\nIf negative monetary or delivery values are present, continue but surface the warning messages in the response."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#validation",
+    "href": "skills/explore/SKILL.html#validation",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Required variables must exist in the processed dataset.\nMonetary and delivery variables must be numeric.\nAt least 10 non-missing payment values and 10 delivered orders with valid delivery dates must be available.\nDate-dependent summaries require valid purchase dates.\nNegative monetary or delivery values must trigger warnings.\nDo not rebuild the processed dataset unless a confirmed schema error is found."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#output",
+    "href": "skills/explore/SKILL.html#output",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Return a list containing:\n\ntotal order count and delivered/canceled counts with percentages\npayment mean, median, SD, and five-number summary\nfreight mean and median\ndelivery mean and median for delivered orders\nlate-delivery count and rate\nmissing-value and unique-value counts\nsaved summary tables and plot paths\n\nStop after returning these outputs. Do not run comparative or predictive skills in the same step."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#interpretation",
+    "href": "skills/explore/SKILL.html#interpretation",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Median payment value: typical order size for SLA and promotion planning.\nMedian freight value: typical shipping cost burden per order.\nLate-delivery rate: service-quality baseline among delivered orders.\nOrder status mix: operational health snapshot across fulfillment outcomes."
+  },
+  {
+    "objectID": "skills/explore/SKILL.html#limitation",
+    "href": "skills/explore/SKILL.html#limitation",
+    "title": "Explore Order Performance",
+    "section": "",
+    "text": "Payment and delivery metrics are right-skewed, so means can be distorted by extreme orders. Delivery metrics exclude canceled, unavailable, and undelivered orders, which introduces survival bias toward successful shipments. Review scores are unavailable and must not be simulated."
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html",
+    "href": "skills/seller-prioritization/SKILL.html",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Rank sellers for operational review using late-delivery performance, cancellation/unavailable exposure, positive delivery delay, and order-volume exposure at the seller-order grain.\n\n\n\nUse this skill when deciding which sellers to audit first for fulfillment performance or cancellation risk.\n\n\n\n\ndata/processed/seller_order_analysis.rds\nOptional: data/processed/order_level_analysis.rds for multi-seller documentation\nMinimum thresholds: 20 seller-order records and 20 valid delivered orders per seller\n\n\n\n\n\nR/seller_prioritization.R\nR/validation_helpers.R\nadditional-skills.qmd\noutput/seller/seller_priority_ranking.csv\noutput/seller/seller_priority_components.csv\noutput/seller/seller_eligibility_summary.csv\noutput/seller/top_seller_priority_plot.png\n\n\n\n\n\nAggregate seller-order records by seller_id\nCompute seller order count, valid delivery count, late delivery count, rates, median delay, freight, and item value totals\nApply eligibility filters\nNormalize components and combine with weights:\n\n40% late-delivery rate\n25% canceled/unavailable rate\n20% positive median delivery delay\n15% log1p order-volume exposure\n\nRank descending by priority_score\n\n\n\n\n\nRun source(\"R/seller_prioritization.R\").\nExecute res &lt;- run_seller_prioritization(\"data/processed/seller_order_analysis.rds\").\nConfirm eligibility counts and formula documentation.\nReview top-ranked sellers and component values.\nRender the Seller Prioritization section in additional-skills.qmd.\nStop with a validation error if no sellers meet both eligibility thresholds.\n\n\n\n\n\nseller_id must exist\nseller_id + order_id must be unique\nMinimum seller-order and valid delivered thresholds must be enforced\nRates must remain between 0 and 1\nNo missing or infinite final scores\nNo duplicate seller rows in ranking\nHighest score must correspond to highest review priority\n\n\n\n\nReturn eligible/excluded seller counts, ranked table, component table, eligibility summary, plot path, and multi-seller handling notes.\n\n\n\n\nHigher priority score: review sooner\nLate-delivery rate: share of valid delivered seller-orders that were late\nVolume exposure: larger sellers can affect more customers even at moderate rates\n\n\n\n\nDelivery outcomes are order-level and may be shared across sellers in multi-seller orders. Logistics factors outside seller control can influence the same delivery timestamp. The score indicates review priority, not proven seller-caused delays."
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#purpose",
+    "href": "skills/seller-prioritization/SKILL.html#purpose",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Rank sellers for operational review using late-delivery performance, cancellation/unavailable exposure, positive delivery delay, and order-volume exposure at the seller-order grain."
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#when-to-use",
+    "href": "skills/seller-prioritization/SKILL.html#when-to-use",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Use this skill when deciding which sellers to audit first for fulfillment performance or cancellation risk."
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#required-inputs",
+    "href": "skills/seller-prioritization/SKILL.html#required-inputs",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "data/processed/seller_order_analysis.rds\nOptional: data/processed/order_level_analysis.rds for multi-seller documentation\nMinimum thresholds: 20 seller-order records and 20 valid delivered orders per seller"
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#files-used",
+    "href": "skills/seller-prioritization/SKILL.html#files-used",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "R/seller_prioritization.R\nR/validation_helpers.R\nadditional-skills.qmd\noutput/seller/seller_priority_ranking.csv\noutput/seller/seller_priority_components.csv\noutput/seller/seller_eligibility_summary.csv\noutput/seller/top_seller_priority_plot.png"
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#method",
+    "href": "skills/seller-prioritization/SKILL.html#method",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Aggregate seller-order records by seller_id\nCompute seller order count, valid delivery count, late delivery count, rates, median delay, freight, and item value totals\nApply eligibility filters\nNormalize components and combine with weights:\n\n40% late-delivery rate\n25% canceled/unavailable rate\n20% positive median delivery delay\n15% log1p order-volume exposure\n\nRank descending by priority_score"
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#procedure",
+    "href": "skills/seller-prioritization/SKILL.html#procedure",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Run source(\"R/seller_prioritization.R\").\nExecute res &lt;- run_seller_prioritization(\"data/processed/seller_order_analysis.rds\").\nConfirm eligibility counts and formula documentation.\nReview top-ranked sellers and component values.\nRender the Seller Prioritization section in additional-skills.qmd.\nStop with a validation error if no sellers meet both eligibility thresholds."
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#validation",
+    "href": "skills/seller-prioritization/SKILL.html#validation",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "seller_id must exist\nseller_id + order_id must be unique\nMinimum seller-order and valid delivered thresholds must be enforced\nRates must remain between 0 and 1\nNo missing or infinite final scores\nNo duplicate seller rows in ranking\nHighest score must correspond to highest review priority"
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#output",
+    "href": "skills/seller-prioritization/SKILL.html#output",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Return eligible/excluded seller counts, ranked table, component table, eligibility summary, plot path, and multi-seller handling notes."
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#interpretation",
+    "href": "skills/seller-prioritization/SKILL.html#interpretation",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Higher priority score: review sooner\nLate-delivery rate: share of valid delivered seller-orders that were late\nVolume exposure: larger sellers can affect more customers even at moderate rates"
+  },
+  {
+    "objectID": "skills/seller-prioritization/SKILL.html#limitation",
+    "href": "skills/seller-prioritization/SKILL.html#limitation",
+    "title": "Seller Prioritization",
+    "section": "",
+    "text": "Delivery outcomes are order-level and may be shared across sellers in multi-seller orders. Logistics factors outside seller control can influence the same delivery timestamp. The score indicates review priority, not proven seller-caused delays."
+  }
+]

@@ -1,0 +1,9 @@
+"check_name","count","percentage"
+"missing_purchase_dates",0,0
+"missing_estimated_delivery_dates",0,0
+"missing_actual_delivery_dates",2965,2.9817
+"actual_delivery_before_purchase",0,0
+"estimated_delivery_before_purchase",0,0
+"approval_before_purchase",0,0
+"delivered_status_without_actual_delivery_date",8,0.008
+"canceled_or_unavailable_with_actual_delivery_date",6,0.006

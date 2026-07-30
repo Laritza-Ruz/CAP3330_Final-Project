@@ -1,0 +1,15 @@
+"metric","value"
+"analysis_sample_size",96469
+"train_size",77175
+"test_size",19294
+"late_prevalence_test_pct",8.11132994713383
+"classification_threshold",0.0811143505021056
+"accuracy",0.671815072043122
+"sensitivity",0.670926517571885
+"specificity",0.671893507812059
+"precision",0.152905198776758
+"f1_score",0.249051233396584
+"roc_auc",0.720672272663135
+"rows_removed",2972
+"use_log_item_price",1
+"use_log_freight",1

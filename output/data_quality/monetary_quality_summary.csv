@@ -1,0 +1,7 @@
+"check_name","count","percentage","tolerance"
+"negative_item_prices_raw",0,0,NA
+"negative_freight_values_raw",0,0,NA
+"negative_payment_values_raw",0,0,NA
+"zero_payment_values_processed",4,0.004,NA
+"payment_difference_exceeds_tolerance",1033,1.0388,0.05
+"missing_or_invalid_seller_count",775,0.7794,NA

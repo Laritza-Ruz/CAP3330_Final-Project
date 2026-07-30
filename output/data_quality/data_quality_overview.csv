@@ -1,0 +1,10 @@
+"metric","value"
+"order_level_rows",99441
+"seller_order_rows",100010
+"issues_detected",27
+"high_severity_issues",4
+"warning_severity_issues",8
+"information_severity_issues",15
+"payment_tolerance",0.05
+"duplicate_order_id_processed",0
+"duplicate_seller_order_processed",0

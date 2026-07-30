@@ -1,0 +1,220 @@
+---
+title: "Operations"
+subtitle: "Trends, seller prioritization, and data quality summary"
+---
+
+```{r setup-skills, echo=FALSE}
+source("R/website_helpers.R")
+silent_run({
+  source("R/trend_analysis.R")
+  source("R/seller_prioritization.R")
+  source("R/data_quality_audit.R")
+  trend_res <- run_trend_analysis("data/processed/order_level_analysis.rds")
+  seller_res <- run_seller_prioritization("data/processed/seller_order_analysis.rds")
+  audit_res <- run_data_quality_audit()
+})
+issues <- audit_res$issue_summary
+get_count <- function(name) {
+  idx <- which(issues$issue_name == name)
+  if (length(idx) == 0) return(0L)
+  as.integer(issues$issue_count[idx[1]])
+}
+```
+
+<div class="ops-section">
+
+<div class="ops-section-header">
+<div class="ops-icon"><i class="bi bi-graph-up-arrow"></i></div>
+<h2>A. Monthly Trends</h2>
+</div>
+
+<div class="question-card">
+<div class="card-title">Business Question</div>
+How did monthly completed-order volume and total customer payment value change over time?
+</div>
+
+```{r trend-kpis, echo=FALSE, results='asis'}
+cat(kpi_row(c(
+  kpi_card("calendar-event", "Peak Month", trend_res$peak_month_count, paste0(format(trend_res$peak_count_val, big.mark = ","), " orders"), "blue"),
+  kpi_card("cart-check", "Completed Orders", format(trend_res$completed_orders_analyzed, big.mark = ","), paste(trend_res$date_range, collapse = " to "), "green"),
+  kpi_card("cash-stack", "Total Payment", paste0("R$ ", format(round(trend_res$total_payment_value_analyzed, 0), big.mark = ",")), "Analyzed completed orders", "navy"),
+  kpi_card("arrow-up-right", "Largest Increase", trend_res$largest_order_increase_month, sprintf("%.1f%% MoM", trend_res$largest_order_increase_pct), "orange")
+)))
+```
+
+<div class="two-col-grid">
+
+<div class="dash-panel chart-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-bar-chart"></i></span> Monthly Order Volume</div>
+<div class="panel-body">![Monthly order trend](output/trend/monthly_order_trend.png)</div>
+</div>
+
+<div class="dash-panel chart-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-currency-dollar"></i></span> Monthly Payment Value</div>
+<div class="panel-body">![Monthly payment trend](output/trend/monthly_payment_trend.png)</div>
+</div>
+
+</div>
+
+<div class="dash-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-calendar3"></i></span> Key Months</div>
+<div class="panel-body">
+
+```{r trend-key-table, echo=FALSE}
+key_months <- trend_res$core_trends[
+  trend_res$core_trends$purchase_month %in% c(
+    trend_res$peak_month_count,
+    trend_res$largest_order_increase_month,
+    trend_res$largest_order_decrease_month
+  ),
+  c("purchase_month", "completed_order_count", "total_payment_value", "order_count_mom_pct")
+]
+knitr::kable(
+  key_months,
+  col.names = c("Month", "Completed Orders", "Payment (R$)", "Orders MoM %"),
+  digits = 2,
+  format.args = list(big.mark = ","),
+  row.names = FALSE
+)
+```
+
+</div>
+</div>
+
+<p class="muted-note">Note: 2016-09 was a partial first month, 2016-11 is absent from the series, and 2016-12 contains only one completed order. These months are excluded from headline comparisons.</p>
+
+<p class="muted-note">The available period is not sufficient to prove recurring seasonality.</p>
+
+<details class="dash-details">
+<summary>Full monthly trend table</summary>
+<div class="details-body">
+
+```{r trend-table, echo=FALSE}
+trend_table <- trend_res$core_trends[, c(
+  "purchase_month", "completed_order_count", "total_payment_value",
+  "average_payment_value", "order_count_mom_pct", "payment_mom_pct"
+)]
+knitr::kable(
+  trend_table,
+  col.names = c("Month", "Completed Orders", "Total Payment (R$)", "Avg Payment (R$)", "Order MoM %", "Payment MoM %"),
+  digits = 2,
+  format.args = list(big.mark = ","),
+  row.names = FALSE
+)
+```
+
+</div>
+</details>
+
+</div>
+
+<div class="ops-section">
+
+<div class="ops-section-header">
+<div class="ops-icon"><i class="bi bi-person-exclamation"></i></div>
+<h2>B. Seller Prioritization</h2>
+</div>
+
+<div class="question-card">
+<div class="card-title">Business Question</div>
+Which sellers should an operations manager review first based on delivery performance and operational exposure?
+</div>
+
+```{r seller-kpis, echo=FALSE, results='asis'}
+top_score <- seller_res$ranked_sellers$priority_score[1]
+cat(kpi_row(c(
+  kpi_card("people", "Sellers Analyzed", format(seller_res$total_sellers_analyzed, big.mark = ","), "All sellers in dataset", "blue"),
+  kpi_card("person-check", "Eligible Sellers", format(seller_res$eligible_sellers, big.mark = ","), "&ge; 20 records and &ge; 20 valid deliveries", "green"),
+  kpi_card("award", "Top Priority Score", sprintf("%.3f", top_score), "Highest ranked seller", "orange"),
+  kpi_card("person-x", "Excluded Sellers", format(seller_res$excluded_sellers, big.mark = ","), "Below eligibility rule", "red")
+)))
+```
+
+<div class="two-col-grid">
+
+<div class="dash-panel chart-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-bar-chart"></i></span> Top 10 Priority Scores</div>
+<div class="panel-body">![Seller prioritization plot](output/seller/top_seller_priority_plot.png)</div>
+</div>
+
+<div class="dash-panel">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-list-ol"></i></span> Top 10 Sellers</div>
+<div class="panel-body">
+
+```{r seller-table, echo=FALSE}
+seller_top <- head(seller_res$ranked_sellers, 10)
+seller_top$seller_id <- short_id(seller_top$seller_id, 8)
+knitr::kable(
+  seller_top[, c("rank", "seller_id", "valid_delivery_count", "late_delivery_rate", "priority_score")],
+  col.names = c("Rank", "Seller ID", "Valid Deliveries", "Late Rate", "Priority Score"),
+  digits = 3,
+  row.names = FALSE
+)
+```
+
+<p class="muted-note">Full ranking: output/seller/seller_priority_ranking.csv</p>
+
+</div>
+</div>
+
+</div>
+
+<div class="insight-card">
+<div class="card-title">Practical Interpretation</div>
+Top-ranked sellers combine elevated late-delivery rates with enough delivered volume to affect many customers. Priority scores weight late-delivery rate and valid delivery volume.
+</div>
+
+<p class="muted-note">Delivery outcomes are shared at the order level for multi-seller orders.</p>
+
+</div>
+
+<div class="ops-section">
+
+<div class="ops-section-header">
+<div class="ops-icon"><i class="bi bi-shield-check"></i></div>
+<h2>C. Data Quality Summary</h2>
+</div>
+
+<div class="question-card">
+<div class="card-title">Business Question</div>
+Are missing values, duplicate keys, inconsistent dates, or payment mismatches affecting analysis reliability?
+</div>
+
+```{r audit-kpis, echo=FALSE, results='asis'}
+cat(kpi_row(c(
+  kpi_card("clipboard-data", "Programmatic Checks", format(nrow(issues), big.mark = ","), "Automated audit rules", "blue"),
+  kpi_card("calendar-x", "Delivered Missing Dates", format(get_count("delivered_without_actual_delivery_date"), big.mark = ","), "Delivered orders without delivery date", "red"),
+  kpi_card("exclamation-triangle", "Canceled With Dates", format(get_count("canceled_or_unavailable_with_actual_delivery_date"), big.mark = ","), "Canceled/unavailable with delivery date", "orange"),
+  kpi_card("copy", "Duplicate Processed Keys", "0", "Order and seller-order keys", "green")
+)))
+```
+
+<div class="dash-panel dash-panel-compact">
+<div class="panel-header"><span class="panel-icon"><i class="bi bi-list-check"></i></span> Priority Issues</div>
+<div class="panel-body">
+
+```{r audit-compact, echo=FALSE}
+priority_issues <- issues[
+  issues$issue_count > 0 &
+    issues$severity %in% c("High", "Warning") &
+    !issues$issue_name %in% c(
+      "order_level_rows", "seller_order_rows",
+      "duplicate_order_id_processed", "duplicate_seller_order_processed"
+    ),
+]
+priority_df <- data.frame(
+  Issue = vapply(priority_issues$issue_name, issue_label, character(1)),
+  Count = format(priority_issues$issue_count, big.mark = ","),
+  stringsAsFactors = FALSE
+)
+knitr::kable(priority_df, align = c("l", "r"), row.names = FALSE)
+```
+
+</div>
+</div>
+
+<div class="info-card compact-copy">
+Full audit details, checks passed, and invalid-request demonstrations are on the <a href="validation-limitations.html">Validation</a> page.
+</div>
+
+</div>

@@ -1,0 +1,7 @@
+"check_name","count"
+"missing_customer_relationship",0
+"missing_seller_relationship_in_items",0
+"orders_without_item_records",775
+"orders_without_payment_records",1
+"multi_seller_orders",1278
+"multi_seller_order_percentage",1.2852

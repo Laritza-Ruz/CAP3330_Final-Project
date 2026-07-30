@@ -1,0 +1,20 @@
+"metric","value"
+"Total orders",99441
+"Delivered/completed orders",96478
+"Delivered/completed (%)",97.02
+"Canceled or unavailable orders",1234
+"Canceled or unavailable (%)",1.24
+"Orders missing delivery dates",2965
+"Mean total payment value",160.99
+"Median total payment value",105.29
+"SD total payment value",221.95
+"Min payment value",0
+"Q1 payment value",62.01
+"Q3 payment value",176.97
+"Max payment value",13664.08
+"Mean total freight value",22.65
+"Median total freight value",17.09
+"Mean actual delivery days (delivered)",12.56
+"Median actual delivery days (delivered)",10.22
+"Late deliveries (delivered orders)",7826
+"Late delivery rate (delivered orders)",8.11

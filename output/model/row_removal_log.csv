@@ -1,0 +1,12 @@
+"metric","count"
+"starting_rows",99441
+"not_completed",2963
+"canceled_or_unavailable",1234
+"missing_actual_delivery_date",2965
+"missing_estimated_delivery_date",0
+"missing_late_delivery",2965
+"negative_delivery_duration",0
+"missing_predictors",0
+"not_paid_payment_type",1
+"final_rows",96469
+"rows_removed",2972
