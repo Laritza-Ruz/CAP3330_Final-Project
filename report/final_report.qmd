@@ -203,7 +203,7 @@ knitr::kable(
 
 ## Interpretation
 
-Accuracy near **`r fmt_num(mod_res$accuracy, 3)`** is misleading because predicting the majority on-time class would achieve similar accuracy while catching almost no late orders. Precision is only **`r fmt_num(mod_res$precision, 3)`**, so most flagged orders would still be on time. The model is therefore a **screening tool** for operational follow-up, not an automatic approve/reject rule. ROC AUC of **`r fmt_num(mod_res$roc_auc, 3)`** shows moderate discrimination. All coefficients represent **associations**, not causal effects.
+Accuracy near **`r fmt_num(mod_res$accuracy, 3)`** is misleading because predicting the majority on-time class would achieve similar accuracy while catching almost no late orders. Precision is only **`r fmt_num(mod_res$precision, 3)`**, so most flagged orders would still be on time. The model is therefore a **screening tool** for manual review, not an automatic approve/reject rule. ROC AUC of **`r fmt_num(mod_res$roc_auc, 3)`** shows moderate discrimination. All coefficients represent **associations**, not causal effects.
 
 # Monthly Sales Trend Analysis
 
@@ -331,15 +331,15 @@ Managers should resolve High-severity timestamp and delivered-status issues befo
 
 # Google Antigravity and Agent Skills
 
-This project used **Google Antigravity** for initial scaffolding and **Agent Skills** (`SKILL.md` files) to standardize development. Later Cursor agents completed validation, statistical corrections, Quarto integration, and this final report.
+Google Antigravity helped me create the initial project structure and skill templates. I also used Agent Skills (`SKILL.md` files) to keep each analysis organized. AI tools assisted with drafting, but I reviewed the proposed methods, tested the R scripts, checked the outputs, and made the final decisions about what to keep or change.
 
-| Phase | Request | Output | Student review |
+| Phase | Request | Output | My review |
 | :--- | :--- | :--- | :--- |
-| Structure | Create Level 2 Quarto website skeleton | `_quarto.yml`, page scaffolds | Accepted layout; renamed Skill 3 after reviews file was missing |
-| Data audit | Inspect CSV grains and join risks | `dataset.qmd`, import/clean drafts | Accepted pre-aggregation concept; added stronger validation later |
-| Skill scaffolds | Create six `SKILL.md` files | `skills/*/SKILL.md` | Accepted format; rejected simulated review scores |
+| Structure | Create Level 2 Quarto website skeleton | `_quarto.yml`, page scaffolds | I accepted the layout and renamed Skill 3 after confirming the reviews file was missing |
+| Data audit | Inspect CSV grains and join risks | `dataset.qmd`, import/clean drafts | I agreed with pre-aggregating one-to-many tables and added my own validation checks |
+| Skill scaffolds | Create six `SKILL.md` files | `skills/*/SKILL.md` | I accepted the format but rejected simulated review scores |
 
-**Rejected redesign:** Once `olist_order_reviews_dataset.csv` was confirmed unavailable, review-score simulation was rejected and the project was rebuilt around real late-delivery modeling.
+**Rejected redesign:** After I confirmed that `olist_order_reviews_dataset.csv` was unavailable, I rejected review-score simulation and rebuilt Skill 3 around real late-delivery outcomes. I also checked methods, outputs, validation wording, and limitations throughout the project.
 
 # Application or Delivery
 
@@ -355,7 +355,7 @@ The static site is published to `_site/index.html`. The final report renders sep
 & "C:\Scale Up_Project\Original working Scale Up AI Manager\bin\quarto.exe" render report/final_report.qmd
 ```
 
-Each Quarto page documents one skill; processed CSV/RDS outputs in `output/` and `data/processed/` support audit trails. The tool is intended for local or intranet deployment as a decision-support dashboard, not autonomous order routing.
+Each Quarto page documents one skill; processed CSV/RDS outputs in `output/` and `data/processed/` support audit trails. The tool is intended for local or intranet deployment as a website that helps managers review results, not autonomous order routing.
 
 # Limitations
 
@@ -365,8 +365,10 @@ Each Quarto page documents one skill; processed CSV/RDS outputs in `output/` and
 
 # Reflection
 
-This project reinforced how operational analytics depends as much on **data engineering** as on modeling. Pre-aggregating one-to-many tables, validating joins, and documenting exclusions prevented inflated revenue and false conclusions. The hardest steps were correcting seller eligibility rules, choosing robust nonparametric tests for skewed delivery times, and explaining why a statistically significant multi-seller difference does not imply causation.
+This project taught me that cleaning and joining the Olist tables took more work than I expected at the start. Orders, items, and payments are one-to-many tables, so a simple join would have duplicated payment and freight totals. I had to aggregate items and payments to one row per order before the analysis made sense.
 
-The three additional skills—monthly trend analysis, seller prioritization, and data quality audit—were selected because an operations manager needs more than descriptive charts and one hypothesis test. Trends support staffing, prioritization converts seller performance into actionable review lists, and the audit builds trust before KPIs reach leadership.
+Interpreting the results also required more caution than I first assumed. The multi-seller comparison was statistically significant, but I could not describe it as causal because seller count may relate to order size, distance, or product mix. Class imbalance made the late-delivery model’s accuracy look better than it really was, and the low precision showed me that the model works better as a screening step than as a final decision rule.
 
-With more time, I would add interactive filters by state or product category, externalize model thresholds by business cost, capture a website screenshot for documentation, and explore survival models for time-to-delivery rather than binary lateness only.
+I added monthly trend analysis, seller prioritization, and a data quality audit because an operations manager needs more than one chart and one hypothesis test. Trends help with staffing plans, seller ranking helps decide who to review first, and the audit helped me judge whether the processed files were reliable before the results are reported.
+
+With more time, I would add filters by state or product category, test different model thresholds based on business cost, and explore survival models for time-to-delivery instead of only a yes/no late flag.

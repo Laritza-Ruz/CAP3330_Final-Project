@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Laritza Ruz Martinez">
-<meta name="dcterms.date" content="2026-07-28">
+<meta name="dcterms.date" content="2026-07-30">
 
 <title>Scale Up E-Commerce Performance Assistant</title>
 <style>
@@ -160,7 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 28, 2026</p>
+      <p class="date">July 30, 2026</p>
     </div>
   </div>
   
@@ -520,7 +520,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="interpretation-1" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation-1">Interpretation</h2>
-<p>Accuracy near <strong>0.672</strong> is misleading because predicting the majority on-time class would achieve similar accuracy while catching almost no late orders. Precision is only <strong>0.153</strong>, so most flagged orders would still be on time. The model is therefore a <strong>screening tool</strong> for operational follow-up, not an automatic approve/reject rule. ROC AUC of <strong>0.721</strong> shows moderate discrimination. All coefficients represent <strong>associations</strong>, not causal effects.</p>
+<p>Accuracy near <strong>0.672</strong> is misleading because predicting the majority on-time class would achieve similar accuracy while catching almost no late orders. Precision is only <strong>0.153</strong>, so most flagged orders would still be on time. The model is therefore a <strong>screening tool</strong> for manual review, not an automatic approve/reject rule. ROC AUC of <strong>0.721</strong> shows moderate discrimination. All coefficients represent <strong>associations</strong>, not causal effects.</p>
 </section>
 </section>
 <section id="monthly-sales-trend-analysis" class="level1">
@@ -1057,7 +1057,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="google-antigravity-and-agent-skills" class="level1">
 <h1>Google Antigravity and Agent Skills</h1>
-<p>This project used <strong>Google Antigravity</strong> for initial scaffolding and <strong>Agent Skills</strong> (<code>SKILL.md</code> files) to standardize development. Later Cursor agents completed validation, statistical corrections, Quarto integration, and this final report.</p>
+<p>Google Antigravity helped me create the initial project structure and skill templates. I also used Agent Skills (<code>SKILL.md</code> files) to keep each analysis organized. AI tools assisted with drafting, but I reviewed the proposed methods, tested the R scripts, checked the outputs, and made the final decisions about what to keep or change.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -1070,7 +1070,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;">Phase</th>
 <th style="text-align: left;">Request</th>
 <th style="text-align: left;">Output</th>
-<th style="text-align: left;">Student review</th>
+<th style="text-align: left;">My review</th>
 </tr>
 </thead>
 <tbody>
@@ -1078,23 +1078,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Structure</td>
 <td style="text-align: left;">Create Level 2 Quarto website skeleton</td>
 <td style="text-align: left;"><code>_quarto.yml</code>, page scaffolds</td>
-<td style="text-align: left;">Accepted layout; renamed Skill 3 after reviews file was missing</td>
+<td style="text-align: left;">I accepted the layout and renamed Skill 3 after confirming the reviews file was missing</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Data audit</td>
 <td style="text-align: left;">Inspect CSV grains and join risks</td>
 <td style="text-align: left;"><code>dataset.qmd</code>, import/clean drafts</td>
-<td style="text-align: left;">Accepted pre-aggregation concept; added stronger validation later</td>
+<td style="text-align: left;">I agreed with pre-aggregating one-to-many tables and added my own validation checks</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Skill scaffolds</td>
 <td style="text-align: left;">Create six <code>SKILL.md</code> files</td>
 <td style="text-align: left;"><code>skills/*/SKILL.md</code></td>
-<td style="text-align: left;">Accepted format; rejected simulated review scores</td>
+<td style="text-align: left;">I accepted the format but rejected simulated review scores</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Rejected redesign:</strong> Once <code>olist_order_reviews_dataset.csv</code> was confirmed unavailable, review-score simulation was rejected and the project was rebuilt around real late-delivery modeling.</p>
+<p><strong>Rejected redesign:</strong> After I confirmed that <code>olist_order_reviews_dataset.csv</code> was unavailable, I rejected review-score simulation and rebuilt Skill 3 around real late-delivery outcomes. I also checked methods, outputs, validation wording, and limitations throughout the project.</p>
 </section>
 <section id="application-or-delivery" class="level1">
 <h1>Application or Delivery</h1>
@@ -1102,7 +1102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> <span class="st">"C:\Scale Up_Project\Original working Scale Up AI Manager\bin\quarto.exe"</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The static site is published to <code>_site/index.html</code>. The final report renders separately:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> <span class="st">"C:\Scale Up_Project\Original working Scale Up AI Manager\bin\quarto.exe"</span> render report<span class="op">/</span>final_report<span class="op">.</span><span class="fu">qmd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Each Quarto page documents one skill; processed CSV/RDS outputs in <code>output/</code> and <code>data/processed/</code> support audit trails. The tool is intended for local or intranet deployment as a decision-support dashboard, not autonomous order routing.</p>
+<p>Each Quarto page documents one skill; processed CSV/RDS outputs in <code>output/</code> and <code>data/processed/</code> support audit trails. The tool is intended for local or intranet deployment as a website that helps managers review results, not autonomous order routing.</p>
 </section>
 <section id="limitations" class="level1">
 <h1>Limitations</h1>
@@ -1114,9 +1114,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="reflection" class="level1">
 <h1>Reflection</h1>
-<p>This project reinforced how operational analytics depends as much on <strong>data engineering</strong> as on modeling. Pre-aggregating one-to-many tables, validating joins, and documenting exclusions prevented inflated revenue and false conclusions. The hardest steps were correcting seller eligibility rules, choosing robust nonparametric tests for skewed delivery times, and explaining why a statistically significant multi-seller difference does not imply causation.</p>
-<p>The three additional skills—monthly trend analysis, seller prioritization, and data quality audit—were selected because an operations manager needs more than descriptive charts and one hypothesis test. Trends support staffing, prioritization converts seller performance into actionable review lists, and the audit builds trust before KPIs reach leadership.</p>
-<p>With more time, I would add interactive filters by state or product category, externalize model thresholds by business cost, capture a website screenshot for documentation, and explore survival models for time-to-delivery rather than binary lateness only.</p>
+<p>This project taught me that cleaning and joining the Olist tables took more work than I expected at the start. Orders, items, and payments are one-to-many tables, so a simple join would have duplicated payment and freight totals. I had to aggregate items and payments to one row per order before the analysis made sense.</p>
+<p>Interpreting the results also required more caution than I first assumed. The multi-seller comparison was statistically significant, but I could not describe it as causal because seller count may relate to order size, distance, or product mix. Class imbalance made the late-delivery model’s accuracy look better than it really was, and the low precision showed me that the model works better as a screening step than as a final decision rule.</p>
+<p>I added monthly trend analysis, seller prioritization, and a data quality audit because an operations manager needs more than one chart and one hypothesis test. Trends help with staffing plans, seller ranking helps decide who to review first, and the audit helped me judge whether the processed files were reliable before the results are reported.</p>
+<p>With more time, I would add filters by state or product category, test different model thresholds based on business cost, and explore survival models for time-to-delivery instead of only a yes/no late flag.</p>
 </section>
 
 </main>
