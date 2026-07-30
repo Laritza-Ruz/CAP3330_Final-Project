@@ -1,0 +1,71 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "skills/**/*.md"
+    - "!report/final_report.qmd"
+
+website:
+  title: "Scale Up E-Commerce"
+  description: "E-commerce operations analytics dashboard"
+  sidebar:
+    style: docked
+    background: "#14213D"
+    foreground: "#FFFFFF"
+    search: true
+    pinned: true
+    contents:
+      - text: |
+          <div class="sidebar-brand">
+            <div class="sidebar-brand-title">Scale Up AI Manager</div>
+            <div class="sidebar-brand-subtitle">E-Commerce Analytics</div>
+          </div>
+      - href: index.qmd
+        text: Dashboard
+        icon: speedometer2
+      - href: dataset.qmd
+        text: Data Overview
+        icon: database
+      - href: explore.qmd
+        text: Explore Orders
+        icon: bar-chart
+      - href: compare.qmd
+        text: Compare Deliveries
+        icon: arrow-left-right
+      - href: model.qmd
+        text: Late Delivery
+        icon: clock-history
+      - href: additional-skills.qmd
+        text: Operations
+        icon: graph-up-arrow
+      - href: validation-limitations.qmd
+        text: Validation
+        icon: shield-check
+  navbar:
+    background: "#14213D"
+    foreground: "#FFFFFF"
+    search: true
+    left: []
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: slate
+    css: styles.css
+    toc: false
+    code-fold: true
+    code-summary: "Show technical details"
+    page-layout: full
+    fig-align: center
+    fig-width: 7.5
+    fig-height: 4
+    grid:
+      sidebar-width: 228px
+      body-width: 1240px
+      margin-width: 0px
+
+execute:
+  echo: false
+  message: false
+  warning: false

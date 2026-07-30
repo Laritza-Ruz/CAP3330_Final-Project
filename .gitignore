@@ -1,0 +1,50 @@
+# R history and workspace images
+.Rhistory
+.RData
+.Ruserdata
+
+# RStudio files
+.Rproj.user/
+
+# Quarto cache and intermediate build artifacts (keep rendered _site/)
+.quarto/
+*_cache/
+/report/final_report_files/
+/report/final_report_cache/
+
+# Root-level Quarto intermediate folders (not _site/)
+/*_files/
+
+# Large raw and processed data (see README for download instructions)
+data/raw/
+data/processed/*.csv
+data/processed/*.rds
+data/processed/*.RData
+
+# Large model binary artifacts
+output/model/*.rds
+
+# Local environment and secret files
+.env
+.env.*
+.Renviron
+*credentials*
+*secrets*
+*.pem
+*.key
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+Ehthumbs.db
+
+# macOS system files
+.DS_Store
+
+# Temporary and backup files
+*.tmp
+*.bak
+*~
+
+# Notebook intermediates
+**/*.quarto_ipynb
