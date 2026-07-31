@@ -3,7 +3,7 @@ project:
   render:
     - "*.qmd"
     - "skills/**/*.md"
-    - "!report/final_report.qmd"
+    - "!final report/final_report.qmd"
 
 website:
   title: "Scale Up E-Commerce"

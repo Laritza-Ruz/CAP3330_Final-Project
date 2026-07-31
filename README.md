@@ -65,7 +65,7 @@ Website home page after rendering:
 - **R** 4.6.0 or compatible
 - **Quarto CLI** 1.9.38 or compatible
 - A modern web browser for viewing the rendered website
-- **Optional for PDF report:** LaTeX distribution such as TinyTeX for `report/final_report.pdf`
+- **Optional for PDF report:** LaTeX distribution such as TinyTeX for `final report/final_report.pdf`
 
 > **Optional troubleshooting:** If `quarto` is not on your PATH, use the full executable path from your local Quarto installation (for example, a course-provided Quarto binary on Windows).
 
@@ -101,13 +101,13 @@ quarto preview
 Open:
 
 - Website: `_site/index.html`
-- Final report HTML fallback: `report/final_report.html`
-- Final report PDF: `report/final_report.pdf`
+- Final report HTML fallback: `final report/final_report.html`
+- Final report PDF: `final report/final_report.pdf`
 
 ## Render the Final Report
 
 ```bash
-quarto render report/final_report.qmd
+quarto render "final report/final_report.qmd"
 ```
 
 ---
@@ -132,7 +132,7 @@ This assignment requires **at least six meaningful commits** with logical stagin
 ### Required repository contents
 
 - The rendered Level 2 website in `_site/` (including all rendered pages)
-- `report/final_report.pdf`
+- `final report/final_report.pdf`
 - All Quarto source pages, R scripts, and six `SKILL.md` files
 - Large raw/processed data may be omitted when this README provides data-access instructions
 
@@ -145,7 +145,7 @@ This assignment requires **at least six meaningful commits** with logical stagin
 5. **Add monthly trend and seller prioritization skills** — trend/seller R scripts and skill folders
 6. **Add data quality audit and validation demonstrations** — audit R script, `validation-limitations.qmd`, audit skill folder
 7. **Build Level 2 Quarto website** — homepage and operations pages, website helpers, images, rendered `_site/`
-8. **Add README, final report, and planning documentation** — `README.md`, `report/final_report.qmd`, PDF, HTML
+8. **Add README, final report, and planning documentation** — `README.md`, `final report/final_report.qmd`, PDF, HTML
 
 ### Connect and push
 

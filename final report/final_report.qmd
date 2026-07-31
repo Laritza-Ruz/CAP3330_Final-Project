@@ -267,21 +267,55 @@ Higher scores indicate higher operational review priority.
 
 ```{r seller-table}
 top10 <- head(sel_res$ranked_sellers, 10)
-knitr::kable(
-  top10[, c(
-    "rank", "seller_id", "seller_order_count", "valid_delivery_count",
-    "late_delivery_rate", "canceled_or_unavailable_rate",
-    "median_delivery_delay_days", "priority_score"
-  )],
-  col.names = c(
-    "Rank", "Seller ID", "Seller-order records", "Valid deliveries",
-    "Late rate", "Cancel/unavail. rate", "Median delay (days)", "Priority score"
-  ),
-  digits = 3
+seller_display <- data.frame(
+  Rank = as.integer(top10$rank),
+  `Seller ID` = substr(as.character(top10$seller_id), 1, 8),
+  Records = as.integer(top10$seller_order_count),
+  `Valid deliveries` = as.integer(top10$valid_delivery_count),
+  `Late rate` = round(top10$late_delivery_rate, 3),
+  `Cancel rate` = round(top10$canceled_or_unavailable_rate, 3),
+  `Priority score` = round(top10$priority_score, 3),
+  check.names = FALSE,
+  stringsAsFactors = FALSE
 )
+if (requireNamespace("kableExtra", quietly = TRUE)) {
+  knitr::kable(
+    seller_display,
+    align = c("r", "l", rep("r", 5)),
+    row.names = FALSE,
+    booktabs = TRUE
+  ) |>
+    kableExtra::kable_styling(
+      latex_options = c("hold_position", "scale_down"),
+      font_size = 8,
+      full_width = FALSE,
+      position = "center"
+    )
+} else if (knitr::is_latex_output()) {
+  knitr::kable(
+    seller_display,
+    align = c("r", "l", rep("r", 5)),
+    row.names = FALSE,
+    booktabs = TRUE
+  )
+} else {
+  knitr::kable(
+    seller_display,
+    align = c("r", "l", rep("r", 5)),
+    row.names = FALSE
+  )
+}
 ```
 
-```{r seller-plot, fig.cap="Top seller prioritization scores.", fig.align='center', echo=FALSE}
+```{r seller-table-note, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) {
+  cat("\\vspace{0.35em}{\\small Seller IDs are shortened for display; rankings and calculations use the full seller IDs.}\\par\\vspace{1.25em}")
+} else {
+  cat('<p style="font-size:0.85em;color:#666;margin-top:0.35em;margin-bottom:1.25em;">Seller IDs are shortened for display; rankings and calculations use the full seller IDs.</p>')
+}
+```
+
+```{r seller-plot, fig.cap="Top seller prioritization scores.", fig.align='center', fig.pos='htbp', echo=FALSE}
 if (file.exists("../output/seller/top_seller_priority_plot.png")) {
   knitr::include_graphics("../output/seller/top_seller_priority_plot.png")
 }
@@ -352,7 +386,7 @@ Operations managers render the website from the project root:
 The static site is published to `_site/index.html`. The final report renders separately:
 
 ```powershell
-& "C:\Scale Up_Project\Original working Scale Up AI Manager\bin\quarto.exe" render report/final_report.qmd
+& "C:\Scale Up_Project\Original working Scale Up AI Manager\bin\quarto.exe" render "final report/final_report.qmd"
 ```
 
 Each Quarto page documents one skill; processed CSV/RDS outputs in `output/` and `data/processed/` support audit trails. The tool is intended for local or intranet deployment as a website that helps managers review results, not autonomous order routing.
@@ -361,7 +395,7 @@ Each Quarto page documents one skill; processed CSV/RDS outputs in `output/` and
 
 1. **Dataset limitation:** The Olist reviews file is missing, historical coverage ends in 2018, and **`2016-11`** is absent from monthly trends. Approximately **`r fmt_pct(exp_res$missing_delivery_dates / exp_res$total_orders)`** of orders lack actual delivery dates.
 2. **Statistical limitation:** All comparisons and regression results are associative. Class imbalance makes accuracy misleading for late-delivery prediction, and seller metrics inherit shared order-level delivery outcomes for multi-seller orders.
-3. **Implementation limitation:** Analyses use base R for stability; the website excludes the final report from default site render (`!report/final_report.qmd` in `_quarto.yml`) to keep PDF compilation separate. Plot regeneration depends on running analysis scripts during report render.
+3. **Implementation limitation:** Analyses use base R for stability; the website excludes the final report from default site render (`!final report/final_report.qmd` in `_quarto.yml`) to keep PDF compilation separate. Plot regeneration depends on running analysis scripts during report render.
 
 # Reflection
 

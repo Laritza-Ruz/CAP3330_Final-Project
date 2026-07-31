@@ -9,8 +9,8 @@
 # Quarto cache and intermediate build artifacts (keep rendered _site/)
 .quarto/
 *_cache/
-/report/final_report_files/
-/report/final_report_cache/
+/final report/final_report_files/
+/final report/final_report_cache/
 
 # Root-level Quarto intermediate folders (not _site/)
 /*_files/
